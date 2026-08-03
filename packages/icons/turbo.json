@@ -1,0 +1,9 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/_svg_assets/**/*.svg"],
+      "outputs": ["dist/**", "icons.json", "icons-mono.json", "src/generated/**"]
+    }
+  }
+}

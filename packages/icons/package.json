@@ -1,0 +1,57 @@
+{
+  "name": "@persian-labs/icons",
+  "version": "0.1.0",
+  "description": "Iranian brand logos for React, Vue, and Iconify.",
+  "keywords": ["iran", "brands", "logos", "icons", "react", "vue", "iconify"],
+  "license": "MIT",
+  "homepage": "https://persian-labs.ir",
+  "repository": { "type": "git", "url": "git+https://github.com/persian-labs/icons.git" },
+  "bugs": { "url": "https://github.com/persian-labs/icons/issues" },
+  "type": "module",
+  "sideEffects": false,
+  "files": ["dist", "icons.json", "icons-mono.json", "README.md", "LICENSE"],
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "build": "bun run generate && tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src scripts",
+    "format": "prettier --write \"{src,scripts}/**/*.{ts,mjs}\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" },
+    "./react": { "types": "./dist/react.d.ts", "import": "./dist/react.js" },
+    "./vue": { "types": "./dist/vue.d.ts", "import": "./dist/vue.js" },
+    "./iconify": "./icons.json",
+    "./iconify-mono": "./icons-mono.json"
+  },
+  "peerDependencies": {
+    "@iconify/react": ">=6",
+    "@iconify/vue": ">=5",
+    "react": ">=18",
+    "vue": ">=3.5"
+  },
+  "peerDependenciesMeta": {
+    "@iconify/react": { "optional": true },
+    "@iconify/vue": { "optional": true },
+    "react": { "optional": true },
+    "vue": { "optional": true }
+  },
+  "devDependencies": {
+    "@iconify/react": "^6.0.2",
+    "@iconify/types": "^2.0.0",
+    "@iconify/utils": "^3.0.2",
+    "@iconify/vue": "^5.0.0",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@workspace/eslint-config": "workspace:*",
+    "@workspace/typescript-config": "workspace:*",
+    "eslint": "^9",
+    "react": "19.2.4",
+    "svgo": "^4.0.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5",
+    "vue": "^3.5.18"
+  },
+  "publishConfig": { "access": "public" }
+}
