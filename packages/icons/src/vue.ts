@@ -1,8 +1,7 @@
-import { Icon, type IconProps } from "@iconify/vue"
 import type { IconifyIcon } from "@iconify/types"
 import { defineComponent, h, type PropType } from "vue"
 
-export type LogoProps = Omit<IconProps, "icon"> & { title?: string }
+export type LogoProps = Record<string, unknown> & { title?: string }
 
 export const LogoIcon = defineComponent({
   name: "LogoIcon",
@@ -13,13 +12,21 @@ export const LogoIcon = defineComponent({
   },
   setup(props, { attrs }) {
     return () =>
-      h(Icon, {
-        ...attrs,
-        icon: props.icon,
-        role: props.title ? "img" : undefined,
-        "aria-label": props.title,
-        "aria-hidden": props.title ? undefined : true,
-      })
+      h(
+        "svg",
+        {
+          xmlns: "http://www.w3.org/2000/svg",
+          viewBox: `${props.icon.left ?? 0} ${props.icon.top ?? 0} ${props.icon.width ?? 16} ${props.icon.height ?? 16}`,
+          "aria-hidden": props.title ? undefined : true,
+          "aria-label": props.title,
+          role: props.title ? "img" : undefined,
+          ...attrs,
+        },
+        [
+          props.title ? h("title", props.title) : null,
+          h("g", { innerHTML: props.icon.body }),
+        ]
+      )
   },
 })
 

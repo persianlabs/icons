@@ -1,6 +1,6 @@
 {
   "name": "@persian-labs/icons",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Iranian brand logos for React, Vue, and Iconify.",
   "keywords": ["iran", "brands", "logos", "icons", "react", "vue", "iconify"],
   "license": "MIT",
@@ -27,22 +27,16 @@
     "./iconify-mono": "./icons-mono.json"
   },
   "peerDependencies": {
-    "@iconify/react": ">=6",
-    "@iconify/vue": ">=5",
     "react": ">=18",
     "vue": ">=3.5"
   },
   "peerDependenciesMeta": {
-    "@iconify/react": { "optional": true },
-    "@iconify/vue": { "optional": true },
     "react": { "optional": true },
     "vue": { "optional": true }
   },
   "devDependencies": {
-    "@iconify/react": "^6.0.2",
     "@iconify/types": "^2.0.0",
     "@iconify/utils": "^3.0.2",
-    "@iconify/vue": "^5.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@workspace/eslint-config": "workspace:*",

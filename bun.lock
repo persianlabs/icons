@@ -62,10 +62,8 @@
       "name": "@persian-labs/icons",
       "version": "0.1.1",
       "devDependencies": {
-        "@iconify/react": "^6.0.2",
         "@iconify/types": "^2.0.0",
         "@iconify/utils": "^3.0.2",
-        "@iconify/vue": "^5.0.0",
         "@types/node": "^20",
         "@types/react": "^19",
         "@workspace/eslint-config": "workspace:*",
@@ -78,14 +76,10 @@
         "vue": "^3.5.18",
       },
       "peerDependencies": {
-        "@iconify/react": ">=6",
-        "@iconify/vue": ">=5",
         "react": ">=18",
         "vue": ">=3.5",
       },
       "optionalPeers": [
-        "@iconify/react",
-        "@iconify/vue",
         "react",
         "vue",
       ],
@@ -292,8 +286,6 @@
     "@iconify/types": ["@iconify/types@2.0.0", "", {}, "sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg=="],
 
     "@iconify/utils": ["@iconify/utils@3.1.4", "", { "dependencies": { "@antfu/install-pkg": "^1.1.0", "@iconify/types": "^2.0.0", "import-meta-resolve": "^4.2.0" } }, "sha512-b1S7B1k9ohZ+iNTi2ATxbRYG9fTrJmUT0rc46bvVnNxqNRGW7dyo/vRREwyniI5IRN2RSJHDcm+s3BjWrSAjHw=="],
-
-    "@iconify/vue": ["@iconify/vue@5.0.1", "", { "dependencies": { "@iconify/types": "^2.0.0" }, "peerDependencies": { "vue": ">=3.0.0" } }, "sha512-aumwwooJlFJ5H5qYWB6ZTAyM0C8hpfcSVLB9/a3qnH1GGvIJ+FEbpEs4s/HfErYe/M5qZeLjwmESR5fFm3lXEw=="],
 
     "@img/colour": ["@img/colour@1.1.0", "", {}, "sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ=="],
 
