@@ -5,7 +5,7 @@ import { validateIconSet } from "@iconify/utils"
 import { optimize } from "svgo"
 
 const packageRoot = join(dirname(fileURLToPath(import.meta.url)), "..")
-const sourceRoot = join(packageRoot, "..", "..", "_svg_assets")
+const sourceRoot = join(packageRoot, "assets")
 const generatedRoot = join(packageRoot, "src", "generated")
 
 const kebab = (value) =>
@@ -71,54 +71,7 @@ function makeMono(svg) {
   return svg.replace(/fill=("|')(?!none\1)[^"']+\1/gi, 'fill="currentColor"')
 }
 
-const newAssets = [
-  {
-    name: "bank-bankino",
-    title: "Bankino",
-    category: "bank",
-    color: "bankino.svg",
-    mono: "bankinono.svg",
-  },
-  {
-    name: "bank-blubank",
-    title: "BluBank",
-    category: "bank",
-    color: "bluyes.svg",
-    mono: "bluno.svg",
-  },
-  {
-    name: "gateway-nextpay",
-    title: "NextPay",
-    category: "gateway",
-    color: "nextpay.svg",
-    mono: "nextpayno.svg",
-  },
-  {
-    name: "gateway-pasargad-pep",
-    title: "Pasargad PEP",
-    category: "gateway",
-    color: "pasargadpepcoloryes.svg",
-    mono: "pasargadpepcolorno.svg",
-  },
-  {
-    name: "gateway-saman-kish",
-    title: "Saman Kish",
-    category: "gateway",
-    color: "samankishyes.svg",
-    mono: "samankishno.svg",
-  },
-  {
-    name: "gateway-zibal",
-    title: "Zibal",
-    category: "gateway",
-    color: "zibalyes.svg",
-    mono: "zibalno.svg",
-  },
-]
-
-const files = (await walk(sourceRoot))
-  .filter((file) => !relative(sourceRoot, file).startsWith("new"))
-  .sort()
+const files = (await walk(sourceRoot)).sort()
 const collections = {
   color: {
     prefix: "persian-logos",
@@ -155,61 +108,31 @@ const records = []
 
 for (const file of files) {
   const parts = relative(sourceRoot, file).split(/[\\/]/)
-  const category = kebab(parts[0])
+  const category = parts[0] === "banks" ? "bank" : "gateway"
   const variant = parts[1].toLowerCase()
   const name = `${category}-${kebab(basename(file))}`
-  const source = await readFile(file, "utf8")
-  const icon = parseSvg(variant === "mono" ? makeMono(source) : source)
+  let source = await readFile(file, "utf8")
+
+  if (name === "gateway-sep") {
+    // SEP's source contains a presentation-only white canvas around the artwork.
+    source = source
+      .replace(/<path\b[\s\S]*?\/>/i, "")
+      .replace(/viewBox=("|')0 0 710 356\1/i, 'viewBox="60 60 591 239"')
+  }
+
+  const svg = optimizeSvg(variant === "mono" ? makeMono(source) : source)
+  const icon = parseSvg(svg)
   collections[variant].icons[name] = icon
-  const label = parts[0] === "Bank" ? "Banks" : "Payment gateways"
+  const label = category === "bank" ? "Banks" : "Payment gateways"
   collections[variant].categories[label] ??= []
   collections[variant].categories[label].push(name)
   records.push({
     name,
-    title: basename(file, ".svg").replaceAll("_", " "),
+    title:
+      name === "gateway-sep"
+        ? "SEP"
+        : basename(file, ".svg").replaceAll("-", " "),
     category,
-    variant,
-    icon,
-  })
-}
-
-const newRoot = join(sourceRoot, "new")
-for (const asset of newAssets) {
-  for (const variant of ["color", "mono"]) {
-    const filename = asset[variant]
-    const source = await readFile(join(newRoot, filename), "utf8")
-    const svg = optimizeSvg(variant === "mono" ? makeMono(source) : source)
-    const icon = parseSvg(svg)
-    collections[variant].icons[asset.name] = icon
-    const label = asset.category === "bank" ? "Banks" : "Payment gateways"
-    collections[variant].categories[label].push(asset.name)
-    records.push({
-      name: asset.name,
-      title: asset.title,
-      category: asset.category,
-      variant,
-      icon,
-    })
-  }
-}
-
-const sepSource = await readFile(join(newRoot, "sep.svg"), "utf8")
-// The supplied SEP artwork starts with a full-canvas white path, not logo artwork.
-// Crop its original presentation canvas as well, otherwise the mark renders undersized.
-const sepWithoutBackground = sepSource
-  .replace(/<path\b[\s\S]*?\/>/i, "")
-  .replace(/viewBox=("|')0 0 710 356\1/i, 'viewBox="60 60 591 239"')
-for (const variant of ["color", "mono"]) {
-  const svg = optimizeSvg(
-    variant === "mono" ? makeMono(sepWithoutBackground) : sepWithoutBackground
-  )
-  const icon = parseSvg(svg)
-  collections[variant].icons["gateway-sep"] = icon
-  collections[variant].categories["Payment gateways"].push("gateway-sep")
-  records.push({
-    name: "gateway-sep",
-    title: "SEP",
-    category: "gateway",
     variant,
     icon,
   })

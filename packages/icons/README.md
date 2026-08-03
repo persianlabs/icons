@@ -18,6 +18,8 @@ import { BankMelliColor } from "@persian-labs/icons/vue"
 
 Iconify JSON is available from `@persian-labs/icons/iconify` and `@persian-labs/icons/iconify-mono`.
 
+Versioned source SVGs are available in `assets/`, organized as `banks` and `payment-gateways`, each with matching `color` and `mono` variants.
+
 Monochrome icons use `currentColor`, allowing them to follow the consumer's theme foreground color.
 
 Huge credit to [zegond/logos-per-banks](https://github.com/zegond/logos-per-banks) for designing the original SVGs that made this collection possible.

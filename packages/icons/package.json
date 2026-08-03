@@ -9,10 +9,11 @@
   "bugs": { "url": "https://github.com/persian-labs/icons/issues" },
   "type": "module",
   "sideEffects": false,
-  "files": ["dist", "icons.json", "icons-mono.json", "README.md", "LICENSE"],
+  "files": ["assets", "dist", "icons.json", "icons-mono.json", "README.md", "LICENSE"],
   "scripts": {
     "generate": "node scripts/generate.mjs",
     "build": "bun run generate && tsup",
+    "prepack": "bun run build",
     "dev": "tsup --watch",
     "lint": "eslint src scripts",
     "format": "prettier --write \"{src,scripts}/**/*.{ts,mjs}\"",

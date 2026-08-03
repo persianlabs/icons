@@ -27,7 +27,6 @@ dist
 # misc
 .DS_Store
 *.pem
-_svg_assets/
 
 # debug
 npm-debug.log*

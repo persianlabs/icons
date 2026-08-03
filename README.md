@@ -60,7 +60,7 @@ The monochrome collection uses `currentColor`, so icons naturally follow the sur
 - `packages/icons` — npm package, generated React/Vue adapters, and Iconify JSON
 - `apps/docs` — Next.js 16.3 documentation and icon playground
 - `packages/ui` — shared shadcn/ui components and styles
-- `_svg_assets` — source SVG artwork
+- `packages/icons/assets` — versioned source SVG artwork, organized by category and variant
 
 ```bash
 bun install

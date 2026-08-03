@@ -7,8 +7,8 @@ This version has breaking changes — APIs, conventions, and file structure may 
 # Persian Logos repository guide
 
 - Use Bun for dependency management and Turbo for workspace tasks.
-- `packages/icons` is the publishable `@persian-labs/icons` package. Its generated files must come from `scripts/generate.mjs`; do not hand-edit `src/generated`, `icons.json`, or `icons-mono.json`.
-- Original artwork lives in `_svg_assets`. Every brand must have both `color` and `mono` output, and monochrome paths must use `currentColor` so they render black in light mode and white in dark mode.
+- `packages/icons` is the publishable `@persian-labs/icons` package. Its generated files must come from `scripts/generate.mjs`; do not hand-edit `src/generated`, `icons.json`, or `icons-mono.json`. Production builds regenerate these files before compiling.
+- Original artwork lives in `packages/icons/assets`, organized by brand category and then `color` or `mono`. Every brand must have both variants, use kebab-case filenames, and monochrome paths must generate with `currentColor` so they render black in light mode and white in dark mode.
 - Generated collections must remain valid Iconify icon sets. Keep their prefixes stable: `persian-logos` and `persian-logos-mono`.
 - `apps/docs` is the Next.js 16.3 documentation playground. Use shared shadcn components from `packages/ui` and preserve English, LTR layout and Geist typography.
 - Credit [zegond/logos-per-banks](https://github.com/zegond/logos-per-banks) whenever attribution is presented; its author designed the original SVG collection.
