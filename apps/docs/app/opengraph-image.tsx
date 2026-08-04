@@ -9,6 +9,18 @@ export const contentType = "image/png"
 const logoFiles = [
   "banks/color/blubank.svg",
   "banks/color/ansar.svg",
+  "banks/color/bankino.svg",
+  "banks/color/futurebank.svg",
+  "banks/color/gardeshgari.svg",
+  "banks/color/ghavamin.svg",
+  "banks/color/iran-europe.svg",
+  "banks/color/iran-venezuela.svg",
+  "banks/color/iran-zamin.svg",
+  "payment-gateways/color/asan-pardakht.svg",
+  "payment-gateways/color/digipay.svg",
+  "payment-gateways/color/idpay.svg",
+  "payment-gateways/color/nextpay.svg",
+  "payment-gateways/color/zarrinpal.svg",
   "payment-gateways/color/zibal.svg",
 ] as const
 
@@ -29,6 +41,7 @@ export default function OpenGraphImage() {
       style={{
         width: "100%",
         height: "100%",
+        position: "relative",
         background: "#141414",
         color: "#f4f4f0",
         display: "flex",
@@ -69,9 +82,39 @@ export default function OpenGraphImage() {
           </svg>
           Persian Logos
         </div>
-        <div style={{ display: "flex", fontSize: 19, color: "#888" }}>
-          github.com/persian-labs/icons
-        </div>
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          top: 68,
+          right: 76,
+          width: 342,
+          height: 494,
+          display: "flex",
+          flexWrap: "wrap",
+          alignContent: "space-between",
+          justifyContent: "space-between",
+        }}
+      >
+        {logoSources.map((src, index) => (
+          <div
+            key={logoFiles[index]}
+            style={{
+              width: 90,
+              height: 90,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <img
+              src={src}
+              width={64}
+              height={64}
+              style={{ objectFit: "contain" }}
+            />
+          </div>
+        ))}
       </div>
       <div
         style={{
@@ -106,33 +149,6 @@ export default function OpenGraphImage() {
             ready to ship.
           </div>
         </div>
-        <div
-          style={{
-            display: "flex",
-            gap: 20,
-            paddingRight: 4,
-          }}
-        >
-          {logoSources.map((src, index) => (
-            <div
-              key={logoFiles[index]}
-              style={{
-                width: 62,
-                height: 62,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <img
-                src={src}
-                width={56}
-                height={56}
-                style={{ objectFit: "contain" }}
-              />
-            </div>
-          ))}
-        </div>
       </div>
       <div
         style={{
@@ -144,7 +160,6 @@ export default function OpenGraphImage() {
         }}
       >
         <span>A growing open-source brand collection</span>
-        <span>persianlabs-icons.vercel.app · React · Vue</span>
       </div>
     </div>,
     size
