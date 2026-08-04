@@ -2,10 +2,10 @@
 
 import { ElasticSlider } from "@/components/elastic-slider"
 import {
-  colorIcons,
-  iconNames,
-  monoIcons,
-  type IconName,
+  colorLogos,
+  logoNames,
+  monoLogos,
+  type LogoName,
   type LogoVariant,
 } from "@persian-labs/icons"
 import { LogoIcon } from "@persian-labs/icons/react"
@@ -35,7 +35,7 @@ import {
 } from "react"
 
 type PackageManager = "npm" | "pnpm" | "bun"
-type SnippetKind = "react" | "vue" | "svelte"
+type SnippetKind = "react" | "vue"
 
 const packageCommands: Record<PackageManager, string> = {
   npm: "npm install @persian-labs/icons",
@@ -48,10 +48,6 @@ const toTitle = (name: string) =>
     ? "SEP"
     : name.split("-").slice(1).map(capitalize).join(" ")
 const toPascal = (value: string) => value.split("-").map(capitalize).join("")
-const toCamel = (value: string) => {
-  const pascal = toPascal(value)
-  return pascal.charAt(0).toLowerCase() + pascal.slice(1)
-}
 const capitalize = (word: string) =>
   word.charAt(0).toUpperCase() + word.slice(1)
 const downloadFile = (filename: string, contents: BlobPart, type: string) => {
@@ -157,7 +153,7 @@ function IconDialog({
   onVariantChange,
   onClose,
 }: {
-  name: IconName | null
+  name: LogoName | null
   variant: LogoVariant
   onVariantChange: (variant: LogoVariant) => void
   onClose: () => void
@@ -166,34 +162,22 @@ function IconDialog({
     if (typeof window === "undefined") return 2
     // Keep a visitor's preferred ecosystem syntax between sessions.
     const saved = Number(localStorage.getItem("persian-logos-copy-style"))
-    return Number.isInteger(saved) && saved >= 0 && saved <= 12 ? saved : 2
+    return Number.isInteger(saved) && saved >= 0 && saved <= 2 ? saved : 1
   })
   const [copied, setCopied] = useState<string | null>(null)
   if (!name) return null
-  const icon = (variant === "color" ? colorIcons : monoIcons)[name]
-  const prefix = variant === "color" ? "persian-logos" : "persian-logos-mono"
+  const icon = (variant === "color" ? colorLogos : monoLogos)[name]
   const title = toTitle(name)
   const component = `${toPascal(name)}${variant === "color" ? "Color" : "Mono"}`
   const syntaxes = [
-    name,
-    toPascal(name),
-    `${prefix}:${name}`,
-    `${prefix}-${name}`,
-    `${prefix}/${name}`,
-    `${prefix}--${name}`,
-    `${toCamel(prefix)}${toPascal(name)}`,
-    `${toPascal(prefix)}${toPascal(name)}`,
     `<${component}/>`,
-    `<${prefix}-${name}/>`,
-    `i-${prefix}:${name}`,
-    `i-${prefix}-${name}`,
-    `icon-[${prefix}--${name}]`,
+    component,
+    `import { ${component} } from "@persian-labs/icons/${variant}"`,
   ]
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${icon.left ?? 0} ${icon.top ?? 0} ${icon.width ?? 16} ${icon.height ?? 16}">${icon.body}</svg>`
   const snippets: Record<SnippetKind, string> = {
     react: `import { ${component} } from "@persian-labs/icons/react"\n\nexport function Logo() {\n  return <${component} width={48} title="${title}" />\n}`,
     vue: `<script setup lang="ts">\nimport { ${component} } from "@persian-labs/icons/vue"\n</script>\n\n<template>\n  <${component} width="48" aria-label="${title}" />\n</template>`,
-    svelte: `<script lang="ts">\n  import Icon from "@iconify/svelte"\n</script>\n\n<Icon icon="${prefix}:${name}" width="48" aria-label="${title}" />`,
   }
   async function copyText(key: string, value: string) {
     await navigator.clipboard.writeText(value)
@@ -369,7 +353,7 @@ function IconDialog({
                       key={kind}
                       onClick={() =>
                         downloadFile(
-                          `${name}.${kind === "react" ? "tsx" : kind === "vue" ? "vue" : "svelte"}`,
+                          `${name}.${kind === "react" ? "tsx" : "vue"}`,
                           snippets[kind],
                           "text/plain"
                         )
@@ -394,12 +378,12 @@ export function LogoPlayground() {
   const [query, setQuery] = useState("")
   const [variant, setVariant] = useState<LogoVariant>("color")
   const [size, setSize] = useState(48)
-  const [selectedIcon, setSelectedIcon] = useState<IconName | null>(null)
+  const [selectedIcon, setSelectedIcon] = useState<LogoName | null>(null)
   const deferredQuery = useDeferredValue(query)
-  const icons = variant === "color" ? colorIcons : monoIcons
+  const logos = variant === "color" ? colorLogos : monoLogos
   const visibleIcons = useMemo(() => {
     const needle = deferredQuery.trim().toLowerCase()
-    return iconNames.filter(
+    return logoNames.filter(
       (name) =>
         !needle ||
         name.includes(needle) ||
@@ -446,7 +430,7 @@ export function LogoPlayground() {
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_390px] lg:items-end">
           <div>
             <p className="mb-5 font-mono text-[11px] tracking-[0.18em] text-foreground/45 uppercase">
-              {iconNames.length} brands · {iconNames.length * 2} marks · MIT
+              {logoNames.length} brands · {logoNames.length * 2} marks · MIT
             </p>
             <h1 className="max-w-5xl text-[clamp(3.25rem,8vw,8.5rem)] leading-[0.84] font-semibold tracking-[-0.075em] text-balance">
               Iranian logos,
@@ -457,7 +441,7 @@ export function LogoPlayground() {
           <div className="border-l border-foreground/15 pl-6 text-sm leading-6 text-foreground/55">
             <p>
               A growing, typed collection of Iranian brand logos. Use the same
-              names in React, Vue, or Iconify.
+              names in native React or Vue components.
             </p>
             <InstallCommand />
           </div>
@@ -513,7 +497,7 @@ export function LogoPlayground() {
               >
                 <span className="flex flex-1 items-center justify-center">
                   <LogoIcon
-                    icon={icons[name]}
+                    icon={logos[name]}
                     width={size}
                     height={size}
                     title={`${toTitle(name)} logo`}
@@ -542,7 +526,7 @@ export function LogoPlayground() {
       <footer className="border-t border-foreground/10">
         <div className="mx-auto flex max-w-[1480px] flex-col gap-5 px-5 py-10 text-xs text-foreground/40 sm:flex-row sm:items-center sm:justify-between lg:px-8">
           <p>
-            Built for React, Vue, and Iconify by{" "}
+            Built for React and Vue by{" "}
             <a
               className="text-foreground hover:underline"
               href="https://persian-labs.ir"

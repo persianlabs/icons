@@ -1,2 +1,3 @@
-export { colorIcons, iconNames, monoIcons } from "./generated/data.js"
-export type { IconName, LogoVariant } from "./generated/data.js"
+export { colorLogos, logoNames, monoLogos } from "./generated/data.js"
+export type { LogoName, LogoVariant } from "./generated/data.js"
+export type { LogoIconData } from "./types.js"

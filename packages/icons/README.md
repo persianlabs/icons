@@ -1,6 +1,6 @@
 # @persian-labs/icons
 
-A growing collection of Iranian brand logos for React, Vue, and Iconify.
+A growing collection of Iranian brand logos as native React and Vue components.
 
 ```tsx
 import { BankMelliColor } from "@persian-labs/icons/react"
@@ -15,8 +15,6 @@ import { BankMelliColor } from "@persian-labs/icons/vue"
 
 <template><BankMelliColor width="48" aria-label="Bank Melli" /></template>
 ```
-
-Iconify JSON is available from `@persian-labs/icons/iconify` and `@persian-labs/icons/iconify-mono`.
 
 Versioned source SVGs are available in `assets/`, organized as `banks` and `payment-gateways`, each with matching `color` and `mono` variants.
 

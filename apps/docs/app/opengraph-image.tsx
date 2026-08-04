@@ -1,9 +1,27 @@
 import { ImageResponse } from "next/og"
+import { readFile } from "node:fs/promises"
+import { join } from "node:path"
 
-export const alt =
-  "Persian Logos — Iranian brand icons for React, Vue, and Iconify"
+export const alt = "Persian Logos — Iranian brand icons for React and Vue"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
+
+const logoFiles = [
+  "banks/color/blubank.svg",
+  "banks/color/ansar.svg",
+  "payment-gateways/color/zibal.svg",
+] as const
+
+// Read the source artwork once so the OG route stays static and self-contained.
+const logoSources = await Promise.all(
+  logoFiles.map(async (file) => {
+    const source = await readFile(
+      join(process.cwd(), "../../packages/icons/assets", file),
+      "base64"
+    )
+    return `data:image/svg+xml;base64,${source}`
+  })
+)
 
 export default function OpenGraphImage() {
   return new ImageResponse(
@@ -55,29 +73,65 @@ export default function OpenGraphImage() {
           github.com/persian-labs/icons
         </div>
       </div>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <div
-          style={{
-            display: "flex",
-            fontSize: 88,
-            lineHeight: 0.95,
-            letterSpacing: "-6px",
-            fontWeight: 650,
-          }}
-        >
-          Iranian logos,
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 64,
+        }}
+      >
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <div
+            style={{
+              display: "flex",
+              fontSize: 88,
+              lineHeight: 0.95,
+              letterSpacing: "-6px",
+              fontWeight: 650,
+            }}
+          >
+            Iranian logos,
+          </div>
+          <div
+            style={{
+              display: "flex",
+              fontSize: 88,
+              lineHeight: 0.95,
+              letterSpacing: "-6px",
+              fontWeight: 650,
+              color: "#777",
+            }}
+          >
+            ready to ship.
+          </div>
         </div>
         <div
           style={{
             display: "flex",
-            fontSize: 88,
-            lineHeight: 0.95,
-            letterSpacing: "-6px",
-            fontWeight: 650,
-            color: "#777",
+            gap: 20,
+            paddingRight: 4,
           }}
         >
-          ready to ship.
+          {logoSources.map((src, index) => (
+            <div
+              key={logoFiles[index]}
+              style={{
+                width: 62,
+                height: 62,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <img
+                src={src}
+                width={56}
+                height={56}
+                style={{ objectFit: "contain" }}
+              />
+            </div>
+          ))}
         </div>
       </div>
       <div
@@ -90,7 +144,7 @@ export default function OpenGraphImage() {
         }}
       >
         <span>A growing open-source brand collection</span>
-        <span>persian-labs.ir · React · Vue · Iconify</span>
+        <span>persianlabs-icons.vercel.app · React · Vue</span>
       </div>
     </div>,
     size

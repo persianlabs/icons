@@ -1,11 +1,15 @@
-import type { IconifyIcon } from "@iconify/types"
 import type { ComponentProps, SVGProps } from "react"
+import type { LogoIconData } from "./types.js"
 
 export type LogoProps = Omit<SVGProps<SVGSVGElement>, "children"> & {
   title?: string
 }
 
-export function LogoIcon({ icon, title, ...props }: LogoProps & { icon: IconifyIcon }) {
+export function LogoIcon({
+  icon,
+  title,
+  ...props
+}: LogoProps & { icon: LogoIconData }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

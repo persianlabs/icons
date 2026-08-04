@@ -1,5 +1,5 @@
-import type { IconifyIcon } from "@iconify/types"
 import { defineComponent, h, type PropType } from "vue"
+import type { LogoIconData } from "./types.js"
 
 export type LogoProps = Record<string, unknown> & { title?: string }
 
@@ -7,7 +7,7 @@ export const LogoIcon = defineComponent({
   name: "LogoIcon",
   inheritAttrs: false,
   props: {
-    icon: { type: Object as PropType<IconifyIcon>, required: true },
+    icon: { type: Object as PropType<LogoIconData>, required: true },
     title: String,
   },
   setup(props, { attrs }) {

@@ -13,21 +13,16 @@ const fontMono = Geist_Mono({
   variable: "--font-mono",
 })
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://persian-labs.ir"
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://persianlabs-icons.vercel.app"
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: "Persian Logos", template: "%s · Persian Logos" },
   description:
-    "A growing open-source collection of Iranian brand logos for React, Vue, and Iconify.",
+    "A growing open-source collection of Iranian brand logos for React and Vue.",
   applicationName: "Persian Logos",
-  keywords: [
-    "Iranian brand logos",
-    "React icons",
-    "Vue icons",
-    "Iconify",
-    "SVG logos",
-  ],
+  keywords: ["Iranian brand logos", "React icons", "Vue icons", "SVG logos"],
   authors: [
     { name: "Persian Labs", url: "https://github.com/persian-labs" },
     { name: "zegond", url: "https://github.com/zegond/logos-per-banks" },
@@ -40,14 +35,12 @@ export const metadata: Metadata = {
     url: "/",
     siteName: "Persian Logos",
     title: "Persian Logos — Iranian brand icons",
-    description:
-      "A growing open-source Iranian logo set for React, Vue, and Iconify.",
+    description: "A growing open-source Iranian logo set for React and Vue.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Persian Logos — Iranian brand icons",
-    description:
-      "A growing open-source Iranian logo set for React, Vue, and Iconify.",
+    description: "A growing open-source Iranian logo set for React and Vue.",
   },
   icons: {
     icon: [

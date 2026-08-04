@@ -12,7 +12,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@iconify/react": "^6.0.2",
     "@persian-labs/icons": "workspace:*",
     "@vercel/analytics": "^2.0.1",
     "@workspace/ui": "workspace:*",

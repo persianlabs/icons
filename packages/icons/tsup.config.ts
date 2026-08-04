@@ -7,5 +7,5 @@ export default defineConfig({
   clean: true,
   splitting: true,
   sourcemap: true,
-  external: ["react", "vue", "@iconify/react", "@iconify/vue"],
+  external: ["react", "vue"],
 })

@@ -1,8 +1,8 @@
 # Persian Logos
 
-A growing, typed, open-source collection of Iranian bank, payment gateway, and brand logos. Use the same icon names in React, Vue, or any Iconify-compatible tool.
+A growing, typed, open-source collection of Iranian bank, payment gateway, and brand logos for React and Vue.
 
-[Website](https://persian-labs.ir) · [GitHub](https://github.com/persian-labs/icons) · [npm](https://www.npmjs.com/package/@persian-labs/icons)
+[Website](https://persianlabs-icons.vercel.app) · [GitHub](https://github.com/persian-labs/icons) · [npm](https://www.npmjs.com/package/@persian-labs/icons)
 
 ## Install
 
@@ -46,18 +46,13 @@ import { BankMelliColor, BankMelliMono } from "@persian-labs/icons/vue"
 </style>
 ```
 
-## Iconify
+## Monochrome logos
 
-The package includes two Iconify-compatible collections:
-
-- `@persian-labs/icons/iconify` — original color artwork with the `persian-logos` prefix
-- `@persian-labs/icons/iconify-mono` — CSS-themeable artwork with the `persian-logos-mono` prefix
-
-The monochrome collection uses `currentColor`, so icons naturally follow the surrounding text color—black in a light theme and white in a dark theme when those are your foreground colors.
+Monochrome components use `currentColor`, so they naturally follow the surrounding text color—black in a light theme and white in a dark theme when those are your foreground colors.
 
 ## Repository
 
-- `packages/icons` — npm package, generated React/Vue adapters, and Iconify JSON
+- `packages/icons` — npm package with generated React and Vue components
 - `apps/docs` — Next.js 16.3 documentation and icon playground
 - `packages/ui` — shared shadcn/ui components and styles
 - `packages/icons/assets` — versioned source SVG artwork, organized by category and variant
