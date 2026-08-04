@@ -16,7 +16,7 @@
     "prepack": "bun run build",
     "dev": "tsup --watch",
     "lint": "eslint src scripts",
-    "format": "prettier --write \"{src,scripts}/**/*.{ts,mjs}\"",
+    "format": "prettier --write \"src/*.{ts,tsx}\" \"scripts/**/*.mjs\"",
     "typecheck": "tsc --noEmit"
   },
   "exports": {
