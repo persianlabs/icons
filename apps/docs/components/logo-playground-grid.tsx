@@ -2,9 +2,9 @@ import * as React from "react"
 import { VirtuosoGrid } from "react-virtuoso"
 
 import { cn } from "@workspace/ui/lib/utils"
-import { type LogoVariant, type LogoName } from "@persian-labs/icons"
-import { LogoIcon } from "@persian-labs/icons/react"
-import { colorLogos, monoLogos } from "@persian-labs/icons"
+import { type LogoVariant, type LogoName } from "@persianlabs/icons"
+import { LogoIcon } from "@persianlabs/icons/react"
+import { colorLogos, monoLogos } from "@persianlabs/icons"
 
 import { getCategory, getCategoryLabel, toTitle } from "./logo-playground-utils"
 

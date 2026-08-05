@@ -2,20 +2,20 @@
 
 A growing, typed, open-source collection of Iranian bank, payment gateway, and brand logos for React and Vue.
 
-[Website](https://icons.persian-labs.ir) · [GitHub](https://github.com/persianlabs/icons) · [npm](https://www.npmjs.com/package/@persian-labs/icons)
+[Website](https://icons.persian-labs.ir) · [GitHub](https://github.com/persianlabs/icons) · [npm](https://www.npmjs.com/package/@persianlabs/icons)
 
 ## Install
 
 ```bash
-npm install @persian-labs/icons
+npm install @persianlabs/icons
 ```
 
-Or use `pnpm add @persian-labs/icons` or `bun add @persian-labs/icons`.
+Or use `pnpm add @persianlabs/icons` or `bun add @persianlabs/icons`.
 
 ## React
 
 ```tsx
-import { BankMelliColor, BankMelliMono } from "@persian-labs/icons/react"
+import { BankMelliColor, BankMelliMono } from "@persianlabs/icons/react"
 
 export function Example() {
   return (
@@ -31,7 +31,7 @@ export function Example() {
 
 ```vue
 <script setup lang="ts">
-import { BankMelliColor, BankMelliMono } from "@persian-labs/icons/vue"
+import { BankMelliColor, BankMelliMono } from "@persianlabs/icons/vue"
 </script>
 
 <template>

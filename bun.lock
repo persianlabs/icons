@@ -17,7 +17,7 @@
       "name": "docs",
       "version": "0.0.1",
       "dependencies": {
-        "@persian-labs/icons": "workspace:*",
+        "@persianlabs/icons": "workspace:*",
         "@vercel/analytics": "^2.0.1",
         "@workspace/ui": "workspace:*",
         "lucide-react": "^1.28.0",
@@ -59,8 +59,8 @@
       },
     },
     "packages/icons": {
-      "name": "@persian-labs/icons",
-      "version": "0.1.4",
+      "name": "@persianlabs/icons",
+      "version": "1.0.0",
       "devDependencies": {
         "@types/node": "^20",
         "@types/react": "^19",
@@ -403,7 +403,7 @@
 
     "@nodelib/fs.walk": ["@nodelib/fs.walk@1.2.8", "", { "dependencies": { "@nodelib/fs.scandir": "2.1.5", "fastq": "^1.6.0" } }, "sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg=="],
 
-    "@persian-labs/icons": ["@persian-labs/icons@workspace:packages/icons"],
+    "@persianlabs/icons": ["@persianlabs/icons@workspace:packages/icons"],
 
     "@rollup/rollup-android-arm-eabi": ["@rollup/rollup-android-arm-eabi@4.62.4", "", { "os": "android", "cpu": "arm" }, "sha512-RrPokAb7dmbxFoeO3TloqHyOjgye8RkBhSqmp4aJMIex4c9r46ZstPnleDQOq1t46VOVjwIuwNogIqbodV1Vvg=="],
 

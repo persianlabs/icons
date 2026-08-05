@@ -12,7 +12,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@persian-labs/icons": "workspace:*",
+    "@persianlabs/icons": "workspace:*",
     "@vercel/analytics": "^2.0.1",
     "@workspace/ui": "workspace:*",
     "lucide-react": "^1.28.0",

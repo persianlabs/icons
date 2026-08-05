@@ -1,16 +1,16 @@
-# @persian-labs/icons
+# @persianlabs/icons
 
 A growing collection of Iranian brand logos as native React and Vue components.
 
 ```tsx
-import { BankMelliColor } from "@persian-labs/icons/react"
+import { BankMelliColor } from "@persianlabs/icons/react"
 
 <BankMelliColor width={48} title="Bank Melli" />
 ```
 
 ```vue
 <script setup lang="ts">
-import { BankMelliColor } from "@persian-labs/icons/vue"
+import { BankMelliColor } from "@persianlabs/icons/vue"
 </script>
 
 <template><BankMelliColor width="48" aria-label="Bank Melli" /></template>

@@ -3,8 +3,8 @@
 import { Check, Copy, Download } from "lucide-react"
 import { useState } from "react"
 
-import { type LogoName, type LogoVariant } from "@persian-labs/icons"
-import { LogoIcon } from "@persian-labs/icons/react"
+import { type LogoName, type LogoVariant } from "@persianlabs/icons"
+import { LogoIcon } from "@persianlabs/icons/react"
 import {
   Dialog,
   DialogContent,
@@ -58,7 +58,7 @@ export function LogoPlaygroundDialog({
   const syntaxes = [
     `<${component}/>`,
     component,
-    `import { ${component} } from "@persian-labs/icons/${variant}"`,
+    `import { ${component} } from "@persianlabs/icons/${variant}"`,
   ]
   const viewBox = `${icon.left ?? 0} ${icon.top ?? 0} ${icon.width ?? 16} ${icon.height ?? 16}`
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}">${icon.body}</svg>`

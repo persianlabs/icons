@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@workspace/ui/components/select"
-import type { LogoVariant } from "@persian-labs/icons"
+import type { LogoVariant } from "@persianlabs/icons"
 
 export function LogoPlaygroundControls({
   query,

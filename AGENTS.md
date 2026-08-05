@@ -7,7 +7,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 # Persian Icons repository guide
 
 - Use Bun for dependency management and Turbo for workspace tasks.
-- `packages/icons` is the publishable `@persian-labs/icons` package. Its generated files must come from `scripts/generate.mjs`; do not hand-edit `src/generated`. Production builds regenerate these files before compiling.
+- `packages/icons` is the publishable `@persianlabs/icons` package. Its generated files must come from `scripts/generate.mjs`; do not hand-edit `src/generated`. Production builds regenerate these files before compiling.
 - Original artwork lives in `packages/icons/assets`, organized by brand category and then `color` or `mono`. Every brand must have both variants, use kebab-case filenames, and monochrome paths must generate with `currentColor` so they render black in light mode and white in dark mode.
 - Generated logo data must preserve the paired color and monochrome mappings and their stable kebab-case logo names.
 - `apps/docs` is the Next.js 16.3 documentation playground. Use shared shadcn components from `packages/ui` and preserve English, LTR layout and Geist typography.
