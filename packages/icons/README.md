@@ -16,7 +16,7 @@ import { BankMelliColor } from "@persian-labs/icons/vue"
 <template><BankMelliColor width="48" aria-label="Bank Melli" /></template>
 ```
 
-Versioned source SVGs are available in `assets/`, organized as `banks` and `payment-gateways`, each with matching `color` and `mono` variants.
+Versioned source SVGs are available in `assets/`, organized by category (banks, payment-gateways, automobiles, and more), each with matching `color` and `mono` variants.
 
 Monochrome icons use `currentColor`, allowing them to follow the consumer's theme foreground color.
 
