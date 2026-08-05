@@ -1,8 +1,39 @@
-# Persian Icons
+<p align="center">
+  <a href="https://icons.persian-labs.ir">
+    <img src="apps/docs/public/web-app-manifest-512x512.png" alt="Persian Icons logo" width="88" height="88" />
+  </a>
+</p>
 
-A growing, typed, open-source collection of Iranian bank, payment gateway, and brand logos for React and Vue.
+<h1 align="center">Persian Icons</h1>
 
-[Website](https://icons.persian-labs.ir) · [GitHub](https://github.com/persianlabs/icons) · [npm](https://www.npmjs.com/package/@persianlabs/icons)
+<p align="center">
+  A growing, typed, open-source collection of Iranian bank, payment gateway, and brand logos for React and Vue.
+</p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/@persianlabs/icons"><img alt="npm version" src="https://img.shields.io/npm/v/@persianlabs/icons?color=000000&style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/@persianlabs/icons"><img alt="npm downloads" src="https://img.shields.io/npm/dm/@persianlabs/icons?color=000000&style=flat-square" /></a>
+  <a href="https://github.com/persianlabs/icons/blob/main/LICENSE"><img alt="License: MIT" src="https://img.shields.io/github/license/persianlabs/icons?color=000000&style=flat-square" /></a>
+  <a href="https://github.com/persianlabs/icons/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/persianlabs/icons?color=000000&style=flat-square" /></a>
+</p>
+
+<p align="center">
+  <a href="https://icons.persian-labs.ir"><b>icons.persian-labs.ir</b></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/persianlabs/icons">GitHub</a>
+  ·
+  <a href="https://www.npmjs.com/package/@persianlabs/icons">npm</a>
+  ·
+  <a href="https://icons.persian-labs.ir/llms.txt">llms.txt</a>
+</p>
+
+<p align="center">
+  <a href="https://icons.persian-labs.ir">
+    <img src=".github/opengraph-image.png" alt="Persian Icons preview" width="640" />
+  </a>
+</p>
 
 ## Install
 
