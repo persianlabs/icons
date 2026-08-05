@@ -5,7 +5,7 @@ export function LogoPlaygroundFooter() {
         <p>
           Built for React and Vue by{" "}
           <a
-            className="text-foreground hover:underline"
+            className="text-foreground underline underline-offset-2 hover:no-underline"
             href="https://github.com/persianlabs"
           >
             Persian Labs
@@ -15,7 +15,7 @@ export function LogoPlaygroundFooter() {
         <p>
           Source credit:{" "}
           <a
-            className="text-foreground hover:underline"
+            className="text-foreground underline underline-offset-2 hover:no-underline"
             href="https://github.com/zegond"
           >
             zegond
@@ -25,35 +25,35 @@ export function LogoPlaygroundFooter() {
         <p>
           Design credit:{" "}
           <a
-            className="text-foreground hover:underline"
+            className="text-foreground underline underline-offset-2 hover:no-underline"
             href="https://www.figma.com/design/WffGtbvZwICTbMxrWFRoZF/400-Persian-Brands--v1.2--Community-?node-id=0-1&p=f&t=9ujkah3t5mrJpL6Y-0"
           >
             Figma community file
           </a>{" "}
           by{" "}
           <a
-            className="text-foreground hover:underline"
+            className="text-foreground underline underline-offset-2 hover:no-underline"
             href="https://www.figma.com/@shahabebadi"
           >
             shahabebadi
           </a>
           ,{" "}
           <a
-            className="text-foreground hover:underline"
+            className="text-foreground underline underline-offset-2 hover:no-underline"
             href="https://www.figma.com/@13masa79"
           >
             13masa79
           </a>
           ,{" "}
           <a
-            className="text-foreground hover:underline"
+            className="text-foreground underline underline-offset-2 hover:no-underline"
             href="https://www.figma.com/@mahdi7715"
           >
             mahdi7715
           </a>
           , and{" "}
           <a
-            className="text-foreground hover:underline"
+            className="text-foreground underline underline-offset-2 hover:no-underline"
             href="https://www.figma.com/@behzad521"
           >
             behzad521

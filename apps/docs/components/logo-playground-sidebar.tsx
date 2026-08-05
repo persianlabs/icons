@@ -56,7 +56,7 @@ function CategoryList({
           )}
         >
           <span>All categories</span>
-          <span className="font-mono text-[10px] opacity-60">{totalCount}</span>
+          <span className="font-mono text-[10px]">{totalCount}</span>
         </button>
         {filtered.map((category) => (
           <button
@@ -71,9 +71,7 @@ function CategoryList({
             )}
           >
             <span className="truncate">{category.label}</span>
-            <span className="font-mono text-[10px] opacity-60">
-              {category.count}
-            </span>
+            <span className="font-mono text-[10px]">{category.count}</span>
           </button>
         ))}
         {filtered.length === 0 && (
