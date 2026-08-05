@@ -2,26 +2,26 @@ import { ImageResponse } from "next/og"
 import { readFile } from "node:fs/promises"
 import { join } from "node:path"
 
-export const alt = "Persian Logos — Iranian brand icons for React and Vue"
+export const alt = "Persian Icons — Iranian brand icons for React and Vue"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
 const logoFiles = [
-  "banks/color/blubank.svg",
   "banks/color/ansar.svg",
-  "banks/color/bankino.svg",
-  "banks/color/futurebank.svg",
-  "banks/color/gardeshgari.svg",
-  "banks/color/ghavamin.svg",
-  "banks/color/iran-europe.svg",
-  "banks/color/iran-venezuela.svg",
-  "banks/color/iran-zamin.svg",
-  "payment-gateways/color/asan-pardakht.svg",
-  "payment-gateways/color/digipay.svg",
-  "payment-gateways/color/idpay.svg",
-  "payment-gateways/color/nextpay.svg",
+  "banks/color/mellat.svg",
   "payment-gateways/color/zarrinpal.svg",
-  "payment-gateways/color/zibal.svg",
+  "payment-gateways/color/nextpay.svg",
+  "social-media/color/rubika.svg",
+  "social-media/color/bale.svg",
+  "vod/color/aparat.svg",
+  "vod/color/filimo.svg",
+  "automobiles/color/iran-khodro.svg",
+  "automobiles/color/saipa.svg",
+  "tv/color/shabake-3.svg",
+  "website-applications/color/digikala.svg",
+  "website-applications/color/snap.svg",
+  "app-store/color/myket.svg",
+  "food-drink/color/zamzam.svg",
 ] as const
 
 // Read the source artwork once so the OG route stays static and self-contained.
@@ -80,7 +80,7 @@ export default function OpenGraphImage() {
               fill="#fff"
             />
           </svg>
-          Persian Logos
+          Persian Icons
         </div>
       </div>
       <div
