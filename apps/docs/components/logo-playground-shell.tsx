@@ -5,10 +5,7 @@ import { Moon, Sun, Check, Copy } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useState, useSyncExternalStore } from "react"
 
-import {
-  packageCommands,
-  type PackageManager,
-} from "./logo-playground-utils"
+import { packageCommands, type PackageManager } from "./logo-playground-utils"
 
 function GitHubMark({ className }: { className?: string }) {
   return (
@@ -42,7 +39,7 @@ function ThemeToggle() {
       className="grid size-9 place-items-center rounded-full border border-foreground/15 text-foreground/55 transition-colors hover:border-foreground/35 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
       aria-label={`Switch to ${dark ? "light" : "dark"} theme`}
     >
-      <Sun className="size-4 hidden dark:block" />
+      <Sun className="hidden size-4 dark:block" />
       <Moon className="size-4 dark:hidden" />
     </button>
   )
@@ -56,11 +53,11 @@ function InstallCommand() {
   const [copied, setCopied] = useState(false)
   const saved = mounted
     ? (localStorage.getItem(
-      "persian-logos-package-manager"
-    ) as PackageManager | null)
+        "persian-logos-package-manager"
+      ) as PackageManager | null)
     : null
   const manager =
-    managerOverride ?? (saved && saved in packageCommands ? saved : "npm")
+    managerOverride ?? (saved && saved in packageCommands ? saved : "pnpm")
   function select(next: PackageManager) {
     setManagerOverride(next)
     localStorage.setItem("persian-logos-package-manager", next)
@@ -77,7 +74,7 @@ function InstallCommand() {
           <button
             key={item}
             onClick={() => select(item)}
-            className={`rounded-md px-3  font-mono text-[11px] ${manager === item ? "bg-foreground text-background" : "text-foreground/40 hover:text-foreground"}`}
+            className={`rounded-md px-3 font-mono text-[11px] ${manager === item ? "bg-foreground text-background" : "text-foreground/65 hover:text-foreground"}`}
           >
             {item}
           </button>
@@ -99,11 +96,7 @@ function InstallCommand() {
   )
 }
 
-export function LogoPlaygroundShell({
-  logoCount,
-}: {
-  logoCount: number
-}) {
+export function LogoPlaygroundShell({ logoCount }: { logoCount: number }) {
   return (
     <>
       <header className="sticky top-0 z-20 border-b border-foreground/10 bg-background/90 backdrop-blur-xl">
@@ -120,16 +113,16 @@ export function LogoPlaygroundShell({
               className="invert dark:invert-0"
             />
             <span className="text-sm font-semibold tracking-[-0.02em]">
-              Persian Logos
+              Persian Icons
             </span>
           </a>
           <div className="flex items-center gap-2">
             <a
-              href="https://github.com/persian-labs/icons"
+              href="https://github.com/persianlabs/icons"
               target="_blank"
               rel="noreferrer"
               className="grid size-9 place-items-center rounded-full border border-foreground/15 text-foreground/55 transition-colors hover:border-foreground/35 hover:text-foreground"
-              aria-label="Persian Logos on GitHub"
+              aria-label="Persian Icons on GitHub"
             >
               <GitHubMark className="size-4" />
             </a>
@@ -143,13 +136,13 @@ export function LogoPlaygroundShell({
       >
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_390px] lg:items-end">
           <div>
-            <p className="mb-5 font-mono text-[11px] tracking-[0.18em] text-foreground/45 uppercase">
+            <p className="mb-5 font-mono text-[11px] tracking-[0.18em] text-foreground/65 uppercase">
               {logoCount} brands · {logoCount * 2} marks · MIT
             </p>
             <h1 className="max-w-5xl text-[clamp(3.25rem,8vw,8.5rem)] leading-[0.84] font-semibold tracking-[-0.075em] text-balance">
               Iranian logos,
               <br />
-              <span className="text-foreground/35">ready to ship.</span>
+              <span className="text-foreground/50">ready to ship.</span>
             </h1>
           </div>
           <div className="border-l border-foreground/15 pl-6 text-sm leading-6 text-foreground/55">

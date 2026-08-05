@@ -6,7 +6,7 @@ import { type LogoVariant, type LogoName } from "@persian-labs/icons"
 import { LogoIcon } from "@persian-labs/icons/react"
 import { colorLogos, monoLogos } from "@persian-labs/icons"
 
-import { toTitle } from "./logo-playground-utils"
+import { getCategory, getCategoryLabel, toTitle } from "./logo-playground-utils"
 
 const GridList = React.forwardRef<
   HTMLDivElement,
@@ -31,7 +31,7 @@ const GridItem = React.forwardRef<
   <div
     ref={ref}
     style={style}
-    className={cn("min-w-0 w-full", className)}
+    className={cn("w-full min-w-0", className)}
     {...props}
   />
 ))
@@ -55,7 +55,7 @@ export function LogoPlaygroundGrid({
   onSelect: (name: LogoName) => void
 }) {
   return (
-    <section className="mx-auto max-w-370 px-5 py-8 lg:px-8 lg:py-12">
+    <section className="px-5 py-8 lg:py-12">
       {visibleIcons.length ? (
         <VirtuosoGrid
           useWindowScroll
@@ -80,7 +80,9 @@ export function LogoPlaygroundGrid({
                       width="100%"
                       height="100%"
                       title={`${toTitle(name)} logo`}
-                      className={variant === "mono" ? "text-foreground" : undefined}
+                      className={
+                        variant === "mono" ? "text-foreground" : undefined
+                      }
                     />
                   </span>
                 </span>
@@ -88,8 +90,8 @@ export function LogoPlaygroundGrid({
                   <span className="block truncate text-sm font-medium">
                     {toTitle(name)}
                   </span>
-                  <span className="mt-1 block font-mono text-[10px] text-foreground/30">
-                    {name.startsWith("bank-") ? "BANK" : "GATEWAY"} · OPEN
+                  <span className="mt-1 block font-mono text-[10px] text-foreground/55">
+                    {getCategoryLabel(getCategory(name)).toUpperCase()} · OPEN
                   </span>
                 </span>
               </button>
@@ -97,7 +99,7 @@ export function LogoPlaygroundGrid({
           }}
         />
       ) : (
-        <div className="grid min-h-80 place-items-center border border-foreground/10 text-sm text-foreground/40">
+        <div className="grid min-h-80 place-items-center border border-foreground/10 text-sm text-foreground/60">
           No logos match “{query}”.
         </div>
       )}

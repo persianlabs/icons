@@ -23,6 +23,9 @@ import { Switch } from "@workspace/ui/components/switch"
 
 import {
   downloadFile,
+  getCategory,
+  getCategoryLabel,
+  toJsxSvgBody,
   toPascal,
   toTitle,
   type PackageManager,
@@ -57,10 +60,12 @@ export function LogoPlaygroundDialog({
     component,
     `import { ${component} } from "@persian-labs/icons/${variant}"`,
   ]
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${icon.left ?? 0} ${icon.top ?? 0} ${icon.width ?? 16} ${icon.height ?? 16}">${icon.body}</svg>`
+  const viewBox = `${icon.left ?? 0} ${icon.top ?? 0} ${icon.width ?? 16} ${icon.height ?? 16}`
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}">${icon.body}</svg>`
+  const reactFunctionName = `${toPascal(name)}${variant === "color" ? "Color" : "Mono"}Icon`
   const snippets: Record<SnippetKind, string> = {
-    react: `import { ${component} } from "@persian-labs/icons/react"\n\nexport function Logo() {\n  return <${component} width={48} title="${title}" />\n}`,
-    vue: `<script setup lang="ts">\nimport { ${component} } from "@persian-labs/icons/vue"\n</script>\n\n<template>\n  <${component} width="48" aria-label="${title}" />\n</template>`,
+    react: `export function ${reactFunctionName}(props: React.SVGProps<SVGSVGElement>) {\n  return (\n    <svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" width={48} height={48} role="img" aria-label="${title}" {...props}>\n      ${toJsxSvgBody(icon.body)}\n    </svg>\n  )\n}`,
+    vue: `<template>\n  <svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" width="48" height="48" role="img" aria-label="${title}">\n    ${icon.body}\n  </svg>\n</template>`,
   }
   async function copyText(key: string, value: string) {
     await navigator.clipboard.writeText(value)
@@ -105,7 +110,7 @@ export function LogoPlaygroundDialog({
           <DialogHeader className="h-16 shrink-0 justify-center gap-0 border-b border-foreground/10 px-5 pr-16">
             <DialogTitle>{title}</DialogTitle>
             <DialogDescription className="font-mono text-[10px] uppercase">
-              {variant} · {name.startsWith("bank-") ? "bank" : "gateway"}
+              {variant} · {getCategoryLabel(getCategory(name))}
             </DialogDescription>
           </DialogHeader>
           <div className="min-h-0 overflow-y-auto">
@@ -115,7 +120,7 @@ export function LogoPlaygroundDialog({
                   className={
                     variant === "color"
                       ? "text-foreground"
-                      : "text-foreground/35"
+                      : "text-foreground/60"
                   }
                 >
                   Color
@@ -131,13 +136,16 @@ export function LogoPlaygroundDialog({
                   className={
                     variant === "mono"
                       ? "text-foreground"
-                      : "text-foreground/35"
+                      : "text-foreground/60"
                   }
                 >
                   Mono
                 </span>
               </div>
-              <div className="flex items-center justify-center transition-[width,height] duration-300 ease-out motion-reduce:transition-none" style={{ width: 128, height: 128 }}>
+              <div
+                className="flex items-center justify-center transition-[width,height] duration-300 ease-out motion-reduce:transition-none"
+                style={{ width: 128, height: 128 }}
+              >
                 <LogoIcon
                   icon={icon}
                   width="100%"
@@ -149,7 +157,7 @@ export function LogoPlaygroundDialog({
             </div>
             <div className="p-5 sm:p-7">
               <section>
-                <p className="mb-3 font-mono text-[10px] tracking-[0.16em] text-foreground/35 uppercase">
+                <p className="mb-3 font-mono text-[10px] tracking-[0.16em] text-foreground/60 uppercase">
                   Copy format · last choice remembered
                 </p>
                 <div className="flex gap-2">
@@ -157,7 +165,10 @@ export function LogoPlaygroundDialog({
                     value={String(syntaxIndex)}
                     onValueChange={(value) => selectSyntax(Number(value))}
                   >
-                    <SelectTrigger className="h-9 min-w-0 flex-1 rounded-xl border-foreground/15 bg-background px-3 font-mono text-[11px]">
+                    <SelectTrigger
+                      aria-label="Copy format"
+                      className="h-9 min-w-0 flex-1 rounded-xl border-foreground/15 bg-background px-3 font-mono text-[11px]"
+                    >
                       <SelectValue>{syntaxes[syntaxIndex] ?? name}</SelectValue>
                     </SelectTrigger>
                     <SelectContent
@@ -187,7 +198,7 @@ export function LogoPlaygroundDialog({
                 </div>
               </section>
               <section className="mt-7 border-t border-foreground/10 pt-5">
-                <p className="mb-3 font-mono text-[10px] tracking-[0.16em] text-foreground/35 uppercase">
+                <p className="mb-3 font-mono text-[10px] tracking-[0.16em] text-foreground/60 uppercase">
                   Download assets
                 </p>
                 <div className="flex flex-wrap gap-2">
@@ -208,7 +219,7 @@ export function LogoPlaygroundDialog({
                 </div>
               </section>
               <section className="mt-7 border-t border-foreground/10 pt-5">
-                <p className="mb-3 font-mono text-[10px] tracking-[0.16em] text-foreground/35 uppercase">
+                <p className="mb-3 font-mono text-[10px] tracking-[0.16em] text-foreground/60 uppercase">
                   Copy snippets
                 </p>
                 <div className="flex flex-wrap gap-2">
@@ -229,7 +240,7 @@ export function LogoPlaygroundDialog({
                 </div>
               </section>
               <section className="mt-7 border-t border-foreground/10 pt-5">
-                <p className="mb-3 font-mono text-[10px] tracking-[0.16em] text-foreground/35 uppercase">
+                <p className="mb-3 font-mono text-[10px] tracking-[0.16em] text-foreground/60 uppercase">
                   Download snippets
                 </p>
                 <div className="flex flex-wrap gap-2">
