@@ -7,16 +7,21 @@ import {
   type LogoName,
   type LogoVariant,
 } from "@persianlabs/icons"
+import dynamic from "next/dynamic"
 import { useDeferredValue, useMemo, useState } from "react"
 
 import { LogoPlaygroundControls } from "./logo-playground-controls"
-import { LogoPlaygroundDialog } from "./logo-playground-dialog"
 import { LogoPlaygroundFooter } from "./logo-playground-footer"
 import { LogoPlaygroundGrid } from "./logo-playground-grid"
 import { LogoPlaygroundScrollTop } from "./logo-playground-scroll-top"
 import { LogoPlaygroundShell } from "./logo-playground-shell"
 import { LogoPlaygroundSidebar } from "./logo-playground-sidebar"
 import { getCategory, getCategoryLabel, toTitle } from "./logo-playground-utils"
+
+const LogoPlaygroundDialog = dynamic(
+  () => import("./logo-playground-dialog").then((m) => m.LogoPlaygroundDialog),
+  { ssr: false }
+)
 
 export function LogoPlayground({ starCount }: { starCount: number | null }) {
   const [query, setQuery] = useState("")

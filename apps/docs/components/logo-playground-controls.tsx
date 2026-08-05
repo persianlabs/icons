@@ -1,6 +1,6 @@
 import { Menu, Search } from "lucide-react"
+import dynamic from "next/dynamic"
 
-import { ElasticSlider } from "@/components/elastic-slider"
 import {
   Select,
   SelectContent,
@@ -9,6 +9,11 @@ import {
   SelectValue,
 } from "@workspace/ui/components/select"
 import type { LogoVariant } from "@persianlabs/icons"
+
+const ElasticSlider = dynamic(
+  () => import("@/components/elastic-slider").then((m) => m.ElasticSlider),
+  { ssr: false, loading: () => <div className="h-9 rounded-lg bg-muted" /> }
+)
 
 export function LogoPlaygroundControls({
   query,
