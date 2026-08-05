@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://icons.persian-labs.ir">
-    <img src="apps/docs/public/web-app-manifest-512x512.png" alt="Persian Icons logo" width="88" height="88" />
+    <img src="apps/docs/public/favicon.svg" alt="Persian Icons logo" width="88" height="88" />
   </a>
 </p>
 
