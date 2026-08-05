@@ -1,8 +1,8 @@
-# Persian Logos
+# Persian Icons
 
 A growing, typed, open-source collection of Iranian bank, payment gateway, and brand logos for React and Vue.
 
-[Website](https://persianlabs-icons.vercel.app) · [GitHub](https://github.com/persian-labs/icons) · [npm](https://www.npmjs.com/package/@persian-labs/icons)
+[Website](https://icons.persian-labs.ir) · [GitHub](https://github.com/persianlabs/icons) · [npm](https://www.npmjs.com/package/@persian-labs/icons)
 
 ## Install
 
@@ -75,4 +75,8 @@ bun run build
 
 Released under the MIT License.
 
-Huge credit to [zegond/logos-per-banks](https://github.com/zegond/logos-per-banks) for designing the original SVGs that made this collection possible.
+Built for React and Vue by [Persian Labs](https://github.com/persianlabs).
+
+Source credit: [zegond](https://github.com/zegond) on GitHub, whose [logos-per-banks](https://github.com/zegond/logos-per-banks) collection made this possible.
+
+Design credit: [Figma community file](https://www.figma.com/design/WffGtbvZwICTbMxrWFRoZF/400-Persian-Brands--v1.2--Community-?node-id=0-1&p=f&t=9ujkah3t5mrJpL6Y-0) by [shahabebadi](https://www.figma.com/@shahabebadi), [13masa79](https://www.figma.com/@13masa79), [mahdi7715](https://www.figma.com/@mahdi7715), and [behzad521](https://www.figma.com/@behzad521).

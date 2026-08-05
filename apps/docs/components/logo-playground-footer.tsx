@@ -1,12 +1,12 @@
 export function LogoPlaygroundFooter() {
   return (
     <footer className="border-t border-foreground/10">
-      <div className="mx-auto grid max-w-370 gap-4 px-5 py-10 text-xs text-foreground/40 lg:px-8">
+      <div className="mx-auto grid max-w-370 gap-4 px-5 py-10 text-xs text-foreground/65 lg:px-8">
         <p>
           Built for React and Vue by{" "}
           <a
             className="text-foreground hover:underline"
-            href="https://github.com/persian-labs"
+            href="https://github.com/persianlabs"
           >
             Persian Labs
           </a>
