@@ -6,7 +6,7 @@ import {
   monoLogos,
   type LogoName,
   type LogoVariant,
-} from "@persian-labs/icons"
+} from "@persianlabs/icons"
 import { useDeferredValue, useMemo, useState } from "react"
 
 import { LogoPlaygroundControls } from "./logo-playground-controls"
@@ -18,7 +18,7 @@ import { LogoPlaygroundShell } from "./logo-playground-shell"
 import { LogoPlaygroundSidebar } from "./logo-playground-sidebar"
 import { getCategory, getCategoryLabel, toTitle } from "./logo-playground-utils"
 
-export function LogoPlayground() {
+export function LogoPlayground({ starCount }: { starCount: number | null }) {
   const [query, setQuery] = useState("")
   const [variant, setVariant] = useState<LogoVariant>("color")
   const [size, setSize] = useState(48)
@@ -51,7 +51,7 @@ export function LogoPlayground() {
   }, [deferredQuery, selectedCategory])
   return (
     <main className="min-h-svh bg-background text-foreground">
-      <LogoPlaygroundShell logoCount={logoNames.length} />
+      <LogoPlaygroundShell logoCount={logoNames.length} starCount={starCount} />
       <div className="mx-auto flex max-w-370 items-start lg:gap-8 lg:px-8">
         <LogoPlaygroundSidebar
           categories={categories}

@@ -2,9 +2,9 @@ type PackageManager = "npm" | "pnpm" | "bun"
 type SnippetKind = "react" | "vue"
 
 const packageCommands: Record<PackageManager, string> = {
-  pnpm: "pnpm add @persian-labs/icons",
-  npm: "npm install @persian-labs/icons",
-  bun: "bun add @persian-labs/icons",
+  pnpm: "pnpm add @persianlabs/icons",
+  npm: "npm install @persianlabs/icons",
+  bun: "bun add @persianlabs/icons",
 }
 
 const capitalize = (word: string) =>
@@ -72,6 +72,13 @@ const toJsxSvgBody = (body: string) =>
     body
   )
 
+const formatCount = (value: number) => {
+  if (value < 1000) return String(value)
+  if (value < 1_000_000)
+    return `${(value / 1000).toFixed(value < 10_000 ? 1 : 0).replace(/\.0$/, "")}k`
+  return `${(value / 1_000_000).toFixed(1).replace(/\.0$/, "")}m`
+}
+
 const downloadFile = (filename: string, contents: BlobPart, type: string) => {
   const url = URL.createObjectURL(new Blob([contents], { type }))
   const anchor = document.createElement("a")
@@ -85,6 +92,7 @@ export type { PackageManager, SnippetKind }
 export {
   capitalize,
   downloadFile,
+  formatCount,
   getCategory,
   getCategoryLabel,
   packageCommands,

@@ -1,11 +1,15 @@
 "use client"
 
 import Image from "next/image"
-import { Moon, Sun, Check, Copy } from "lucide-react"
+import { Moon, Sun, Check, Copy, Star } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useState, useSyncExternalStore } from "react"
 
-import { packageCommands, type PackageManager } from "./logo-playground-utils"
+import {
+  formatCount,
+  packageCommands,
+  type PackageManager,
+} from "./logo-playground-utils"
 
 function GitHubMark({ className }: { className?: string }) {
   return (
@@ -36,7 +40,7 @@ function ThemeToggle() {
     <button
       type="button"
       onClick={() => setTheme(dark ? "light" : "dark")}
-      className="grid size-9 place-items-center rounded-full border border-foreground/15 text-foreground/55 transition-colors hover:border-foreground/35 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
+      className="grid size-9 place-items-center rounded-lg border border-foreground/15 text-foreground/55 transition-colors hover:border-foreground/35 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
       aria-label={`Switch to ${dark ? "light" : "dark"} theme`}
     >
       <Sun className="hidden size-4 dark:block" />
@@ -96,7 +100,13 @@ function InstallCommand() {
   )
 }
 
-export function LogoPlaygroundShell({ logoCount }: { logoCount: number }) {
+export function LogoPlaygroundShell({
+  logoCount,
+  starCount,
+}: {
+  logoCount: number
+  starCount: number | null
+}) {
   return (
     <>
       <header className="sticky top-0 z-20 border-b border-foreground/10 bg-background/90 backdrop-blur-xl">
@@ -121,10 +131,20 @@ export function LogoPlaygroundShell({ logoCount }: { logoCount: number }) {
               href="https://github.com/persianlabs/icons"
               target="_blank"
               rel="noreferrer"
-              className="grid size-9 place-items-center rounded-full border border-foreground/15 text-foreground/55 transition-colors hover:border-foreground/35 hover:text-foreground"
-              aria-label="Persian Icons on GitHub"
+              className="flex h-9 items-center gap-1.5 rounded-lg border border-foreground/15 px-2.5 text-foreground/55 transition-colors hover:border-foreground/35 hover:text-foreground"
+              aria-label={
+                starCount !== null
+                  ? `Persian Icons on GitHub, ${starCount} stars`
+                  : "Persian Icons on GitHub"
+              }
             >
               <GitHubMark className="size-4" />
+              {starCount !== null && (
+                <span className="flex items-center gap-1 border-l border-foreground/15 pl-1.5 font-mono text-[11px] tabular-nums">
+                  <Star className="size-3" />
+                  {formatCount(starCount)}
+                </span>
+              )}
             </a>
             <ThemeToggle />
           </div>
