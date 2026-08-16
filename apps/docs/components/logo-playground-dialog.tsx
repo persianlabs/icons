@@ -3,8 +3,8 @@
 import { Check, Copy, Download } from "lucide-react"
 import { useState } from "react"
 
-import { type LogoName, type LogoVariant } from "@persianlabs/icons"
-import { LogoIcon } from "@persianlabs/icons/react"
+import { type LogoIconData, type LogoName, type LogoVariant } from "@persianlabs/icons/meta"
+import { LogoIcon } from "@persianlabs/icons/logo-icon"
 import {
   Dialog,
   DialogContent,
@@ -40,7 +40,7 @@ export function LogoPlaygroundDialog({
   onClose,
 }: {
   name: LogoName | null
-  logos: Record<LogoName, Parameters<typeof LogoIcon>[0]["icon"]>
+  logos: Partial<Record<LogoName, LogoIconData>>
   variant: LogoVariant
   onVariantChange: (variant: LogoVariant) => void
   onClose: () => void
@@ -53,6 +53,7 @@ export function LogoPlaygroundDialog({
   const [copied, setCopied] = useState<string | null>(null)
   if (!name) return null
   const icon = logos[name]
+  if (!icon) return null
   const title = toTitle(name)
   const component = `${toPascal(name)}${variant === "color" ? "Color" : "Mono"}`
   const syntaxes = [

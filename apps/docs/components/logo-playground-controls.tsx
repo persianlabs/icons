@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@workspace/ui/components/select"
-import type { LogoVariant } from "@persianlabs/icons"
+import type { LogoVariant } from "@persianlabs/icons/meta"
 
 const ElasticSlider = dynamic(
   () => import("@/components/elastic-slider").then((m) => m.ElasticSlider),

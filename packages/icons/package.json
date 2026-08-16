@@ -12,7 +12,8 @@
   "files": ["assets", "dist", "README.md", "LICENSE"],
   "scripts": {
     "generate": "node scripts/generate.mjs",
-    "build": "bun run generate && tsup",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "bun run generate && bun run clean && tsup",
     "prepack": "bun run build",
     "dev": "tsup --watch",
     "lint": "eslint src scripts",
@@ -22,7 +23,13 @@
   "exports": {
     ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" },
     "./react": { "types": "./dist/react.d.ts", "import": "./dist/react.js" },
-    "./vue": { "types": "./dist/vue.d.ts", "import": "./dist/vue.js" }
+    "./vue": { "types": "./dist/vue.d.ts", "import": "./dist/vue.js" },
+    "./lazy": { "types": "./dist/lazy.d.ts", "import": "./dist/lazy.js" },
+    "./meta": { "types": "./dist/meta.d.ts", "import": "./dist/meta.js" },
+    "./logo-icon": {
+      "types": "./dist/logo-icon.d.ts",
+      "import": "./dist/logo-icon.js"
+    }
   },
   "peerDependencies": {
     "react": ">=18",
