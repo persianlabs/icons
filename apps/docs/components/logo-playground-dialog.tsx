@@ -21,16 +21,47 @@ import {
 } from "@workspace/ui/components/select"
 import { Switch } from "@workspace/ui/components/switch"
 
+import { downloadLogos } from "./logo-download"
 import {
-  downloadFile,
+  buildJsxSnippet,
+  buildReactSnippet,
+  buildSvgMarkup,
+  buildSvgSymbolMarkup,
+  buildVueSnippet,
+  renderPngBlob,
+  type DownloadFormat,
+} from "./logo-format"
+import {
   getCategory,
   getCategoryLabel,
-  toJsxSvgBody,
   toPascal,
   toTitle,
-  type PackageManager,
-  type SnippetKind,
 } from "./logo-playground-utils"
+
+const downloadButtons: { key: DownloadFormat; label: string }[] = [
+  { key: "svg", label: "SVG" },
+  { key: "png", label: "PNG" },
+  { key: "vue", label: "Vue" },
+  { key: "react", label: "React" },
+  { key: "react-ts", label: "React TS" },
+  { key: "svelte", label: "Svelte" },
+]
+
+type SnippetKey = "svg" | "svg-symbol" | "png" | "jsx"
+const snippetButtons: { key: SnippetKey; label: string }[] = [
+  { key: "svg", label: "SVG" },
+  { key: "svg-symbol", label: "SVG Symbol" },
+  { key: "png", label: "PNG" },
+  { key: "jsx", label: "JSX" },
+]
+
+type ComponentKey = "vue" | "vue-ts" | "react" | "react-ts"
+const componentButtons: { key: ComponentKey; label: string }[] = [
+  { key: "vue", label: "Vue" },
+  { key: "vue-ts", label: "Vue TS" },
+  { key: "react", label: "React" },
+  { key: "react-ts", label: "React TS" },
+]
 
 export function LogoPlaygroundDialog({
   name,
@@ -61,40 +92,63 @@ export function LogoPlaygroundDialog({
     component,
     `import { ${component} } from "@persianlabs/icons/${variant}"`,
   ]
-  const viewBox = `${icon.left ?? 0} ${icon.top ?? 0} ${icon.width ?? 16} ${icon.height ?? 16}`
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}">${icon.body}</svg>`
-  const reactFunctionName = `${toPascal(name)}${variant === "color" ? "Color" : "Mono"}Icon`
-  const snippets: Record<SnippetKind, string> = {
-    react: `export function ${reactFunctionName}(props: React.SVGProps<SVGSVGElement>) {\n  return (\n    <svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" width={48} height={48} role="img" aria-label="${title}" {...props}>\n      ${toJsxSvgBody(icon.body)}\n    </svg>\n  )\n}`,
-    vue: `<template>\n  <svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" width="48" height="48" role="img" aria-label="${title}">\n    ${icon.body}\n  </svg>\n</template>`,
-  }
   async function copyText(key: string, value: string) {
     await navigator.clipboard.writeText(value)
+    markCopied(key)
+  }
+  function markCopied(key: string) {
     setCopied(key)
     window.setTimeout(
       () => setCopied((current) => (current === key ? null : current)),
       1400
     )
   }
+  async function copyPng(key: string) {
+    if (!icon) return
+    const blob = await renderPngBlob(icon)
+    try {
+      await navigator.clipboard.write([
+        new ClipboardItem({ "image/png": blob }),
+      ])
+    } catch {
+      const dataUrl = await new Promise<string>((resolve) => {
+        const reader = new FileReader()
+        reader.onload = () => resolve(String(reader.result))
+        reader.readAsDataURL(blob)
+      })
+      await navigator.clipboard.writeText(dataUrl)
+    }
+    markCopied(key)
+  }
   function selectSyntax(index: number) {
     setSyntaxIndex(index)
     localStorage.setItem("persian-logos-copy-style", String(index))
   }
-  async function downloadPng() {
-    const image = document.createElement("img")
-    const url = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }))
-    image.onload = () => {
-      const canvas = document.createElement("canvas")
-      canvas.width = 512
-      canvas.height = 512
-      const context = canvas.getContext("2d")
-      context?.drawImage(image, 0, 0, 512, 512)
-      canvas.toBlob((blob) => {
-        if (blob) downloadFile(`${name}.png`, blob, "image/png")
-      }, "image/png")
-      URL.revokeObjectURL(url)
+  function snippetFor(key: SnippetKey) {
+    if (!icon) return ""
+    switch (key) {
+      case "svg":
+        return buildSvgMarkup(icon)
+      case "svg-symbol":
+        return buildSvgSymbolMarkup(name!, icon)
+      case "jsx":
+        return buildJsxSnippet(icon, title)
+      case "png":
+        return ""
     }
-    image.src = url
+  }
+  function componentFor(key: ComponentKey) {
+    if (!icon) return ""
+    switch (key) {
+      case "vue":
+        return buildVueSnippet(icon, title, false)
+      case "vue-ts":
+        return buildVueSnippet(icon, title, true)
+      case "react":
+        return buildReactSnippet(name!, variant, icon, title, false)
+      case "react-ts":
+        return buildReactSnippet(name!, variant, icon, title, true)
+    }
   }
   return (
     <Dialog
@@ -200,65 +254,67 @@ export function LogoPlaygroundDialog({
               </section>
               <section className="mt-7 border-t border-foreground/10 pt-5">
                 <p className="mb-3 font-mono text-[10px] tracking-[0.16em] text-foreground/60 uppercase">
-                  Download assets
+                  Download
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  <button
-                    onClick={() =>
-                      downloadFile(`${name}.svg`, svg, "image/svg+xml")
-                    }
-                    className="flex h-8 items-center gap-1.5 rounded-full border border-foreground/15 px-3 text-[10px] hover:border-foreground/35"
-                  >
-                    <Download className="size-3" /> SVG
-                  </button>
-                  <button
-                    onClick={downloadPng}
-                    className="flex h-8 items-center gap-1.5 rounded-full border border-foreground/15 px-3 text-[10px] hover:border-foreground/35"
-                  >
-                    <Download className="size-3" /> PNG
-                  </button>
-                </div>
-              </section>
-              <section className="mt-7 border-t border-foreground/10 pt-5">
-                <p className="mb-3 font-mono text-[10px] tracking-[0.16em] text-foreground/60 uppercase">
-                  Copy snippets
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {(Object.keys(snippets) as SnippetKind[]).map((kind) => (
+                  {downloadButtons.map(({ key, label }) => (
                     <button
-                      key={kind}
-                      onClick={() => copyText(kind, snippets[kind])}
-                      className="flex h-8 items-center gap-1.5 rounded-full border border-foreground/15 px-3 text-[10px] capitalize hover:border-foreground/35"
+                      key={key}
+                      onClick={() =>
+                        downloadLogos({
+                          names: [name!],
+                          variant,
+                          format: key,
+                          getIcon: () => icon,
+                        })
+                      }
+                      className="flex h-8 items-center gap-1.5 rounded-full border border-foreground/15 px-3 text-[10px] hover:border-foreground/35"
                     >
-                      {copied === kind ? (
-                        <Check className="size-3" />
-                      ) : (
-                        <Copy className="size-3" />
-                      )}
-                      {kind}
+                      <Download className="size-3" /> {label}
                     </button>
                   ))}
                 </div>
               </section>
               <section className="mt-7 border-t border-foreground/10 pt-5">
                 <p className="mb-3 font-mono text-[10px] tracking-[0.16em] text-foreground/60 uppercase">
-                  Download snippets
+                  Snippets · click to copy
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {(Object.keys(snippets) as SnippetKind[]).map((kind) => (
+                  {snippetButtons.map(({ key, label }) => (
                     <button
-                      key={kind}
+                      key={key}
                       onClick={() =>
-                        downloadFile(
-                          `${name}.${kind === "react" ? "tsx" : "vue"}`,
-                          snippets[kind],
-                          "text/plain"
-                        )
+                        key === "png" ? copyPng(key) : copyText(key, snippetFor(key))
                       }
-                      className="flex h-8 items-center gap-1.5 rounded-full border border-foreground/15 px-3 text-[10px] capitalize hover:border-foreground/35"
+                      className="flex h-8 items-center gap-1.5 rounded-full border border-foreground/15 px-3 text-[10px] hover:border-foreground/35"
                     >
-                      <Download className="size-3" />
-                      {kind}
+                      {copied === key ? (
+                        <Check className="size-3" />
+                      ) : (
+                        <Copy className="size-3" />
+                      )}
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </section>
+              <section className="mt-7 border-t border-foreground/10 pt-5">
+                <p className="mb-3 font-mono text-[10px] tracking-[0.16em] text-foreground/60 uppercase">
+                  Components · click to copy
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {componentButtons.map(({ key, label }) => (
+                    <button
+                      key={key}
+                      onClick={() => copyText(key, componentFor(key))}
+                      className="flex h-8 items-center gap-1.5 rounded-full border border-foreground/15 px-3 text-[10px] hover:border-foreground/35"
+                    >
+                      {copied === key ? (
+                        <Check className="size-3" />
+                      ) : (
+                        <Copy className="size-3" />
+                      )}
+                      {label}
                     </button>
                   ))}
                 </div>
