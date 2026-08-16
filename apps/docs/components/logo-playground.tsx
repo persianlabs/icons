@@ -12,6 +12,7 @@ import { LogoPlaygroundControls } from "./logo-playground-controls"
 import { LogoPlaygroundFooter } from "./logo-playground-footer"
 import { LogoPlaygroundGrid } from "./logo-playground-grid"
 import { LogoPlaygroundScrollTop } from "./logo-playground-scroll-top"
+import { LogoPlaygroundSelectionBar } from "./logo-playground-selection-bar"
 import { LogoPlaygroundShell } from "./logo-playground-shell"
 import { LogoPlaygroundSidebar } from "./logo-playground-sidebar"
 import { getCategory, getCategoryLabel, toTitle } from "./logo-playground-utils"
@@ -31,6 +32,7 @@ export function LogoPlayground({ starCount }: { starCount: number | null }) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
+  const [selectedNames, setSelectedNames] = useState<Set<LogoName>>(new Set())
   const [loadedCategories, setLoadedCategories] = useState<
     Record<string, CategoryLogos>
   >({})
@@ -98,6 +100,41 @@ export function LogoPlayground({ starCount }: { starCount: number | null }) {
     }
     return merged
   }, [neededCategories, loadedCategories, variant])
+  function toggleSelect(name: LogoName) {
+    setSelectedNames((current) => {
+      const next = new Set(current)
+      if (next.has(name)) next.delete(name)
+      else next.add(name)
+      return next
+    })
+  }
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      if (!(event.ctrlKey || event.metaKey) || event.key.toLowerCase() !== "a")
+        return
+      const target = event.target as HTMLElement | null
+      const tag = target?.tagName
+      if (tag === "INPUT" || tag === "TEXTAREA" || target?.isContentEditable)
+        return
+      event.preventDefault()
+      setSelectedNames((current) => {
+        const allLoaded = visibleIcons.every((name) => current.has(name))
+        const next = new Set(current)
+        for (const name of visibleIcons) {
+          if (allLoaded) next.delete(name)
+          else next.add(name)
+        }
+        return next
+      })
+    }
+    document.addEventListener("keydown", onKeyDown)
+    return () => document.removeEventListener("keydown", onKeyDown)
+  }, [visibleIcons])
+  function getIconForVariant(name: LogoName, targetVariant: LogoVariant) {
+    const group = loadedCategories[getCategory(name)]
+    if (!group) return undefined
+    return targetVariant === "color" ? group.colorLogos[name] : group.monoLogos[name]
+  }
   return (
     <main className="min-h-svh bg-background text-foreground">
       <LogoPlaygroundShell logoCount={logoNames.length} starCount={starCount} />
@@ -132,6 +169,8 @@ export function LogoPlayground({ starCount }: { starCount: number | null }) {
             onLoadMore={() => setVisibleCount((count) => count + PAGE_SIZE)}
             totalCount={matchingIcons.length}
             onShowAll={() => setVisibleCount(matchingIcons.length)}
+            selectedNames={selectedNames}
+            onToggleSelect={toggleSelect}
           />
         </div>
       </div>
@@ -143,6 +182,13 @@ export function LogoPlayground({ starCount }: { starCount: number | null }) {
         variant={variant}
         onVariantChange={setVariant}
         onClose={() => setSelectedIcon(null)}
+      />
+      <LogoPlaygroundSelectionBar
+        selectedNames={[...selectedNames]}
+        onDeselectAll={() => setSelectedNames(new Set())}
+        onToggleSelect={toggleSelect}
+        getIcon={getIconForVariant}
+        defaultVariant={variant}
       />
     </main>
   )

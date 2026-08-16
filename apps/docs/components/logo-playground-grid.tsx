@@ -2,6 +2,7 @@ import * as React from "react"
 import { VirtuosoGrid } from "react-virtuoso"
 
 import { cn } from "@workspace/ui/lib/utils"
+import { Checkbox } from "@workspace/ui/components/checkbox"
 import { type LogoVariant, type LogoName, type LogoIconData } from "@persianlabs/icons/meta"
 import { LogoIcon } from "@persianlabs/icons/logo-icon"
 
@@ -49,6 +50,8 @@ export function LogoPlaygroundGrid({
   onLoadMore,
   totalCount,
   onShowAll,
+  selectedNames,
+  onToggleSelect,
 }: {
   logos: LogoMap
   visibleIcons: LogoName[]
@@ -60,7 +63,10 @@ export function LogoPlaygroundGrid({
   onLoadMore: () => void
   totalCount: number
   onShowAll: () => void
+  selectedNames: ReadonlySet<LogoName>
+  onToggleSelect: (name: LogoName) => void
 }) {
+  const selectionMode = selectedNames.size > 0
   return (
     <section className="px-5 py-8 lg:py-12">
       {visibleIcons.length ? (
@@ -73,13 +79,35 @@ export function LogoPlaygroundGrid({
               const name = visibleIcons[index]
               if (!name) return null
               const icon = logos[name]
+              const checked = selectedNames.has(name)
               return (
                 <button
                   type="button"
                   disabled={!icon}
-                  onClick={() => onSelect(name)}
-                  className="group relative flex min-h-56 w-full flex-col border-r border-b border-foreground/10 bg-background p-5 text-left transition-colors hover:bg-muted/45 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-foreground"
+                  onClick={() =>
+                    selectionMode ? onToggleSelect(name) : onSelect(name)
+                  }
+                  className={cn(
+                    "group relative isolate flex min-h-56 w-full flex-col border-r border-b border-foreground/10 bg-background p-5 text-left transition-colors hover:bg-muted/45 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-foreground",
+                    checked && "bg-muted/45 ring-2 ring-inset ring-primary"
+                  )}
                 >
+                  <span
+                    onClick={(event) => event.stopPropagation()}
+                    onPointerDown={(event) => event.stopPropagation()}
+                    className={cn(
+                      "absolute top-3 left-3 z-10 transition-opacity",
+                      selectionMode
+                        ? "opacity-100"
+                        : "opacity-0 group-hover:opacity-100 has-[:focus-visible]:opacity-100"
+                    )}
+                  >
+                    <Checkbox
+                      checked={checked}
+                      onCheckedChange={() => onToggleSelect(name)}
+                      aria-label={`Select ${toTitle(name)}`}
+                    />
+                  </span>
                   <span className="flex flex-1 items-center justify-center">
                     <span
                       className="flex items-center justify-center transition-[width,height] duration-300 ease-out motion-reduce:transition-none"
