@@ -149,8 +149,8 @@ export function LogoPlaygroundSelectionBar({
   }
 
   return (
-    <div className="fixed inset-x-0 bottom-6 z-30 flex justify-center px-4">
-      <div className="flex items-center gap-3 rounded-full border border-foreground/15 bg-background/95 px-4 py-2.5 shadow-lg backdrop-blur-xl">
+    <div className="pointer-events-none fixed inset-x-0 bottom-6 z-30 flex justify-center px-4">
+      <div className="pointer-events-auto flex items-center gap-3 rounded-full border border-foreground/15 bg-background/95 px-4 py-2.5 shadow-lg backdrop-blur-xl">
         <SelectedPreviewPopover
           selectedNames={selectedNames}
           getIcon={getIcon}

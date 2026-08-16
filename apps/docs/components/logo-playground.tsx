@@ -10,13 +10,36 @@ import { useDeferredValue, useEffect, useMemo, useState } from "react"
 
 import { LogoPlaygroundControls } from "./logo-playground-controls"
 import { LogoPlaygroundFooter } from "./logo-playground-footer"
-import { LogoPlaygroundGrid } from "./logo-playground-grid"
 import { LogoPlaygroundScrollTop } from "./logo-playground-scroll-top"
-import { LogoPlaygroundSelectionBar } from "./logo-playground-selection-bar"
 import { LogoPlaygroundShell } from "./logo-playground-shell"
 import { LogoPlaygroundSidebar } from "./logo-playground-sidebar"
 import { getCategory, getCategoryLabel, toTitle } from "./logo-playground-utils"
 
+// Header/sidebar/search stay static imports so they hydrate from a small
+// chunk immediately. The grid (react-virtuoso, checkbox) and selection bar
+// (popover, scroll-area, zip download) pull in enough JS that eagerly
+// bundling them here would delay hydration of everything else on the page -
+// e.g. the theme toggle and search box would stay inert until that JS
+// finished downloading and parsing. Splitting them out keeps those chunks
+// independent of the interactive controls.
+const LogoPlaygroundGrid = dynamic(
+  () => import("./logo-playground-grid").then((m) => m.LogoPlaygroundGrid),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="grid min-h-160 place-items-center px-5 py-8 text-sm text-foreground/40 lg:py-12">
+        Loading icons…
+      </div>
+    ),
+  }
+)
+const LogoPlaygroundSelectionBar = dynamic(
+  () =>
+    import("./logo-playground-selection-bar").then(
+      (m) => m.LogoPlaygroundSelectionBar
+    ),
+  { ssr: false }
+)
 const LogoPlaygroundDialog = dynamic(
   () => import("./logo-playground-dialog").then((m) => m.LogoPlaygroundDialog),
   { ssr: false }
