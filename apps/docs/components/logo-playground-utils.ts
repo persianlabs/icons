@@ -1,5 +1,4 @@
 type PackageManager = "npm" | "pnpm" | "bun"
-type SnippetKind = "react" | "vue"
 
 const packageCommands: Record<PackageManager, string> = {
   pnpm: "pnpm add @persianlabs/icons",
@@ -88,7 +87,7 @@ const downloadFile = (filename: string, contents: BlobPart, type: string) => {
   URL.revokeObjectURL(url)
 }
 
-export type { PackageManager, SnippetKind }
+export type { PackageManager }
 export {
   capitalize,
   downloadFile,
