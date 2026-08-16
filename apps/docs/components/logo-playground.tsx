@@ -1,14 +1,12 @@
 "use client"
 
+import { logoNames, type LogoName, type LogoVariant } from "@persianlabs/icons/meta"
 import {
-  colorLogos,
-  logoNames,
-  monoLogos,
-  type LogoName,
-  type LogoVariant,
-} from "@persianlabs/icons"
+  loadCategoryLogos,
+  type CategoryLogos,
+} from "@persianlabs/icons/lazy"
 import dynamic from "next/dynamic"
-import { useDeferredValue, useMemo, useState } from "react"
+import { useDeferredValue, useEffect, useMemo, useState } from "react"
 
 import { LogoPlaygroundControls } from "./logo-playground-controls"
 import { LogoPlaygroundFooter } from "./logo-playground-footer"
@@ -23,6 +21,8 @@ const LogoPlaygroundDialog = dynamic(
   { ssr: false }
 )
 
+const PAGE_SIZE = 40
+
 export function LogoPlayground({ starCount }: { starCount: number | null }) {
   const [query, setQuery] = useState("")
   const [variant, setVariant] = useState<LogoVariant>("color")
@@ -30,8 +30,11 @@ export function LogoPlayground({ starCount }: { starCount: number | null }) {
   const [selectedIcon, setSelectedIcon] = useState<LogoName | null>(null)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
+  const [loadedCategories, setLoadedCategories] = useState<
+    Record<string, CategoryLogos>
+  >({})
   const deferredQuery = useDeferredValue(query)
-  const logos = variant === "color" ? colorLogos : monoLogos
   const categories = useMemo(() => {
     const counts = new Map<string, number>()
     for (const name of logoNames) {
@@ -42,7 +45,7 @@ export function LogoPlayground({ starCount }: { starCount: number | null }) {
       .map(([key, count]) => ({ key, label: getCategoryLabel(key), count }))
       .sort((a, b) => a.label.localeCompare(b.label))
   }, [])
-  const visibleIcons = useMemo(() => {
+  const matchingIcons = useMemo(() => {
     const needle = deferredQuery.trim().toLowerCase()
     return logoNames.filter((name) => {
       if (selectedCategory && getCategory(name) !== selectedCategory)
@@ -54,6 +57,47 @@ export function LogoPlayground({ starCount }: { starCount: number | null }) {
       )
     })
   }, [deferredQuery, selectedCategory])
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE)
+  }, [deferredQuery, selectedCategory])
+  const visibleIcons = useMemo(
+    () => matchingIcons.slice(0, visibleCount),
+    [matchingIcons, visibleCount]
+  )
+  const neededCategories = useMemo(
+    () => [...new Set(visibleIcons.map(getCategory))],
+    [visibleIcons]
+  )
+  useEffect(() => {
+    const missing = neededCategories.filter((key) => !(key in loadedCategories))
+    if (!missing.length) return
+    let cancelled = false
+    Promise.all(
+      missing.map((key) =>
+        loadCategoryLogos(key).then((logos) => [key, logos] as const)
+      )
+    ).then((entries) => {
+      if (cancelled) return
+      setLoadedCategories((current) => {
+        const next = { ...current }
+        for (const [key, logos] of entries) next[key] = logos
+        return next
+      })
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [neededCategories, loadedCategories])
+  const logos = useMemo(() => {
+    const merged: Partial<Record<LogoName, CategoryLogos["colorLogos"][LogoName]>> =
+      {}
+    for (const key of neededCategories) {
+      const group = loadedCategories[key]
+      if (!group) continue
+      Object.assign(merged, variant === "color" ? group.colorLogos : group.monoLogos)
+    }
+    return merged
+  }, [neededCategories, loadedCategories, variant])
   return (
     <main className="min-h-svh bg-background text-foreground">
       <LogoPlaygroundShell logoCount={logoNames.length} starCount={starCount} />
@@ -74,7 +118,7 @@ export function LogoPlayground({ starCount }: { starCount: number | null }) {
             onVariantChange={setVariant}
             size={size}
             onSizeChange={setSize}
-            visibleCount={visibleIcons.length}
+            visibleCount={matchingIcons.length}
             onOpenSidebar={() => setSidebarOpen(true)}
           />
           <LogoPlaygroundGrid
@@ -84,6 +128,10 @@ export function LogoPlayground({ starCount }: { starCount: number | null }) {
             variant={variant}
             size={size}
             onSelect={setSelectedIcon}
+            hasMore={visibleCount < matchingIcons.length}
+            onLoadMore={() => setVisibleCount((count) => count + PAGE_SIZE)}
+            totalCount={matchingIcons.length}
+            onShowAll={() => setVisibleCount(matchingIcons.length)}
           />
         </div>
       </div>
