@@ -25,6 +25,7 @@ jobs:
           package-manager-cache: false
 
       - run: bun install --frozen-lockfile
+      - run: bun run --filter @persianlabs/icons build
       - run: bun run typecheck
       - run: bun run lint
       - run: bun run build
