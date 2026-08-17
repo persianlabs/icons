@@ -1,0 +1,3 @@
+# Normalize line endings to LF regardless of a contributor's local
+# core.autocrlf setting, matching Prettier's endOfLine: "lf" config.
+* text=auto eol=lf

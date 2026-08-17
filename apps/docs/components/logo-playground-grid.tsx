@@ -3,7 +3,11 @@ import { VirtuosoGrid } from "react-virtuoso"
 
 import { cn } from "@workspace/ui/lib/utils"
 import { Checkbox } from "@workspace/ui/components/checkbox"
-import { type LogoVariant, type LogoName, type LogoIconData } from "@persianlabs/icons/meta"
+import {
+  type LogoVariant,
+  type LogoName,
+  type LogoIconData,
+} from "@persianlabs/icons/meta"
 import { LogoIcon } from "@persianlabs/icons/logo-icon"
 
 import { getCategory, getCategoryLabel, toTitle } from "./logo-playground-utils"
@@ -89,7 +93,7 @@ export function LogoPlaygroundGrid({
                   }
                   className={cn(
                     "group relative isolate flex min-h-56 w-full flex-col border-r border-b border-foreground/10 bg-background p-5 text-left transition-colors hover:bg-muted/45 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-foreground",
-                    checked && "bg-muted/45 ring-2 ring-inset ring-primary"
+                    checked && "bg-muted/45 ring-2 ring-primary ring-inset"
                   )}
                 >
                   <span

@@ -1,6 +1,14 @@
-import type { LogoIconData, LogoName, LogoVariant } from "@persianlabs/icons/meta"
+import type {
+  LogoIconData,
+  LogoName,
+  LogoVariant,
+} from "@persianlabs/icons/meta"
 
-import { buildTextFile, renderPngBlob, type DownloadFormat } from "./logo-format"
+import {
+  buildTextFile,
+  renderPngBlob,
+  type DownloadFormat,
+} from "./logo-format"
 import { downloadFile, toTitle } from "./logo-playground-utils"
 
 async function fileFor(
@@ -13,7 +21,13 @@ async function fileFor(
     const blob = await renderPngBlob(icon)
     return { content: blob, extension: "png" }
   }
-  const { content, extension } = buildTextFile(format, name, variant, icon, toTitle(name))
+  const { content, extension } = buildTextFile(
+    format,
+    name,
+    variant,
+    icon,
+    toTitle(name)
+  )
   return { content, extension }
 }
 
@@ -31,7 +45,9 @@ export async function downloadLogos({
 }) {
   const entries = names
     .map((name) => ({ name, icon: getIcon(name) }))
-    .filter((entry): entry is { name: LogoName; icon: LogoIconData } => !!entry.icon)
+    .filter(
+      (entry): entry is { name: LogoName; icon: LogoIconData } => !!entry.icon
+    )
   if (!entries.length) return
 
   if (entries.length === 1) {

@@ -3,7 +3,11 @@
 import { Download, X } from "lucide-react"
 import { useState } from "react"
 
-import { type LogoIconData, type LogoName, type LogoVariant } from "@persianlabs/icons/meta"
+import {
+  type LogoIconData,
+  type LogoName,
+  type LogoVariant,
+} from "@persianlabs/icons/meta"
 import { LogoIcon } from "@persianlabs/icons/logo-icon"
 import {
   Popover,
@@ -77,39 +81,41 @@ function SelectedPreviewPopover({
         </PopoverHeader>
         <ScrollArea className="h-72" viewportClassName="scroll-fade">
           <div className="grid grid-cols-3 gap-2 pt-1 pr-3 sm:grid-cols-4">
-          {selectedNames.map((name) => {
-            const icon = getIcon(name, previewVariant)
-            return (
-              <div
-                key={name}
-                className="group relative flex flex-col items-center gap-1 rounded-lg border border-foreground/10 p-2"
-              >
-                <button
-                  type="button"
-                  onClick={() => onRemove(name)}
-                  aria-label={`Remove ${toTitle(name)}`}
-                  className="absolute top-1 right-1 flex size-4.5 items-center justify-center rounded-full bg-foreground text-background opacity-0 transition-opacity group-hover:opacity-100"
+            {selectedNames.map((name) => {
+              const icon = getIcon(name, previewVariant)
+              return (
+                <div
+                  key={name}
+                  className="group relative flex flex-col items-center gap-1 rounded-lg border border-foreground/10 p-2"
                 >
-                  <X className="size-2.5" />
-                </button>
-                <span className="flex size-8 items-center justify-center">
-                  {icon ? (
-                    <LogoIcon
-                      icon={icon}
-                      width="100%"
-                      height="100%"
-                      className={
-                        previewVariant === "mono" ? "text-foreground" : undefined
-                      }
-                    />
-                  ) : null}
-                </span>
-                <span className="w-full truncate text-center text-[10px] text-foreground/65">
-                  {toTitle(name)}
-                </span>
-              </div>
-            )
-          })}
+                  <button
+                    type="button"
+                    onClick={() => onRemove(name)}
+                    aria-label={`Remove ${toTitle(name)}`}
+                    className="absolute top-1 right-1 flex size-4.5 items-center justify-center rounded-full bg-foreground text-background opacity-0 transition-opacity group-hover:opacity-100"
+                  >
+                    <X className="size-2.5" />
+                  </button>
+                  <span className="flex size-8 items-center justify-center">
+                    {icon ? (
+                      <LogoIcon
+                        icon={icon}
+                        width="100%"
+                        height="100%"
+                        className={
+                          previewVariant === "mono"
+                            ? "text-foreground"
+                            : undefined
+                        }
+                      />
+                    ) : null}
+                  </span>
+                  <span className="w-full truncate text-center text-[10px] text-foreground/65">
+                    {toTitle(name)}
+                  </span>
+                </div>
+              )
+            })}
           </div>
         </ScrollArea>
       </PopoverContent>
@@ -130,7 +136,8 @@ export function LogoPlaygroundSelectionBar({
   getIcon: (name: LogoName, variant: LogoVariant) => LogoIconData | undefined
   defaultVariant: LogoVariant
 }) {
-  const [downloadVariant, setDownloadVariant] = useState<LogoVariant>(defaultVariant)
+  const [downloadVariant, setDownloadVariant] =
+    useState<LogoVariant>(defaultVariant)
   const [pending, setPending] = useState<DownloadFormat | null>(null)
   if (!selectedNames.length) return null
 
@@ -163,7 +170,8 @@ export function LogoPlaygroundSelectionBar({
           aria-label="Deselect all"
           className="flex aspect-square size-8 shrink-0 items-center justify-center gap-1.5 rounded-full border border-foreground/15 text-[11px] hover:border-foreground/35 sm:aspect-auto sm:w-auto sm:px-3"
         >
-          <X className="size-3 shrink-0" /> <span className="hidden sm:inline">Deselect all</span>
+          <X className="size-3 shrink-0" />{" "}
+          <span className="hidden sm:inline">Deselect all</span>
         </button>
         <Popover>
           <PopoverTrigger
@@ -175,7 +183,8 @@ export function LogoPlaygroundSelectionBar({
               />
             }
           >
-            <Download className="size-3 shrink-0" /> <span className="hidden sm:inline">Download</span>
+            <Download className="size-3 shrink-0" />{" "}
+            <span className="hidden sm:inline">Download</span>
           </PopoverTrigger>
           <PopoverContent align="end" side="top">
             <PopoverHeader>

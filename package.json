@@ -7,11 +7,14 @@
     "dev": "turbo run dev --filter=docs",
     "lint": "turbo run lint",
     "format": "turbo run format",
-    "typecheck": "turbo run typecheck"
+    "format:check": "prettier --check \"apps/docs/{app,components,hooks}/**/*.{ts,tsx}\" \"apps/docs/*.{ts,tsx}\" \"packages/icons/src/*.{ts,tsx}\" \"packages/icons/scripts/**/*.mjs\" \"packages/ui/**/*.{ts,tsx}\"",
+    "typecheck": "turbo run typecheck",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@workspace/eslint-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
+    "husky": "^9.1.7",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.8.0",
     "turbo": "^2.9.18",

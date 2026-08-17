@@ -1,10 +1,11 @@
 "use client"
 
-import { logoNames, type LogoName, type LogoVariant } from "@persianlabs/icons/meta"
 import {
-  loadCategoryLogos,
-  type CategoryLogos,
-} from "@persianlabs/icons/lazy"
+  logoNames,
+  type LogoName,
+  type LogoVariant,
+} from "@persianlabs/icons/meta"
+import { loadCategoryLogos, type CategoryLogos } from "@persianlabs/icons/lazy"
 import dynamic from "next/dynamic"
 import { useDeferredValue, useEffect, useMemo, useState } from "react"
 
@@ -114,12 +115,16 @@ export function LogoPlayground({ starCount }: { starCount: number | null }) {
     }
   }, [neededCategories, loadedCategories])
   const logos = useMemo(() => {
-    const merged: Partial<Record<LogoName, CategoryLogos["colorLogos"][LogoName]>> =
-      {}
+    const merged: Partial<
+      Record<LogoName, CategoryLogos["colorLogos"][LogoName]>
+    > = {}
     for (const key of neededCategories) {
       const group = loadedCategories[key]
       if (!group) continue
-      Object.assign(merged, variant === "color" ? group.colorLogos : group.monoLogos)
+      Object.assign(
+        merged,
+        variant === "color" ? group.colorLogos : group.monoLogos
+      )
     }
     return merged
   }, [neededCategories, loadedCategories, variant])
@@ -156,7 +161,9 @@ export function LogoPlayground({ starCount }: { starCount: number | null }) {
   function getIconForVariant(name: LogoName, targetVariant: LogoVariant) {
     const group = loadedCategories[getCategory(name)]
     if (!group) return undefined
-    return targetVariant === "color" ? group.colorLogos[name] : group.monoLogos[name]
+    return targetVariant === "color"
+      ? group.colorLogos[name]
+      : group.monoLogos[name]
   }
   return (
     <main className="min-h-svh bg-background text-foreground">

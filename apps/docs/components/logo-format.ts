@@ -1,8 +1,13 @@
-import type { LogoIconData, LogoName, LogoVariant } from "@persianlabs/icons/meta"
+import type {
+  LogoIconData,
+  LogoName,
+  LogoVariant,
+} from "@persianlabs/icons/meta"
 
 import { toJsxSvgBody, toPascal } from "./logo-playground-utils"
 
-export type DownloadFormat = "svg" | "png" | "vue" | "react" | "react-ts" | "svelte"
+export type DownloadFormat =
+  "svg" | "png" | "vue" | "react" | "react-ts" | "svelte"
 
 export const downloadFormats: { key: DownloadFormat; label: string }[] = [
   { key: "svg", label: "SVG" },
@@ -37,7 +42,11 @@ export const buildReactSnippet = (
   return `import * as React from "react"\n\nexport function ${fnName}(${props}) {\n  return (\n    <svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBoxOf(icon)}" width={48} height={48} role="img" aria-label="${title}" {...props}>\n      ${toJsxSvgBody(icon.body)}\n    </svg>\n  )\n}`
 }
 
-export const buildVueSnippet = (icon: LogoIconData, title: string, typed: boolean) =>
+export const buildVueSnippet = (
+  icon: LogoIconData,
+  title: string,
+  typed: boolean
+) =>
   `<template>\n  <svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBoxOf(icon)}" width="48" height="48" role="img" aria-label="${title}">\n    ${icon.body}\n  </svg>\n</template>${typed ? '\n<script setup lang="ts"></script>\n' : ""}`
 
 export const buildSvelteSnippet = (icon: LogoIconData, title: string) =>

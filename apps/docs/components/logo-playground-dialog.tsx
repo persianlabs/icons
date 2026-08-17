@@ -3,7 +3,11 @@
 import { Check, Copy, Download } from "lucide-react"
 import { useState } from "react"
 
-import { type LogoIconData, type LogoName, type LogoVariant } from "@persianlabs/icons/meta"
+import {
+  type LogoIconData,
+  type LogoName,
+  type LogoVariant,
+} from "@persianlabs/icons/meta"
 import { LogoIcon } from "@persianlabs/icons/logo-icon"
 import {
   Dialog,
@@ -284,7 +288,9 @@ export function LogoPlaygroundDialog({
                     <button
                       key={key}
                       onClick={() =>
-                        key === "png" ? copyPng(key) : copyText(key, snippetFor(key))
+                        key === "png"
+                          ? copyPng(key)
+                          : copyText(key, snippetFor(key))
                       }
                       className="flex h-8 items-center gap-1.5 rounded-full border border-foreground/15 px-3 text-[10px] hover:border-foreground/35"
                     >
