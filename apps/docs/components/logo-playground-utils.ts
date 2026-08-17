@@ -27,6 +27,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   food: "Food & Drink",
   football: "Football Clubs",
   appliance: "Household Appliances",
+  tech: "Tech Companies",
   insurance: "Insurance",
   isp: "ISPs",
   media: "Media & News",
