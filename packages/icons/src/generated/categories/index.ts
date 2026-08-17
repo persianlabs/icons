@@ -22,6 +22,7 @@ export const categoryLoaders: Record<string, () => Promise<CategoryModule>> = {
   "organization": () => import("./organization.js"),
   "social": () => import("./social.js"),
   "store": () => import("./store.js"),
+  "tech": () => import("./tech.js"),
   "transportation": () => import("./transportation.js"),
   "tv": () => import("./tv.js"),
   "university": () => import("./university.js"),

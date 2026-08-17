@@ -19,6 +19,7 @@ const CATEGORY_PREFIXES = {
   "food-drink": "food",
   football: "football",
   "household-appliances": "appliance",
+  "tech-companies": "tech",
   insurance: "insurance",
   isp: "isp",
   "media-news": "media",
